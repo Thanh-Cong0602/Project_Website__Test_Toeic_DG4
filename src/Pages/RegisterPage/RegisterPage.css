@@ -1,0 +1,92 @@
+.registerPage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url("../../Assets/background_login.avif");
+  background-size: cover;
+  background-position: center;
+  background-position: center;
+}
+.registerPage .registerForm {
+  position: absolute;
+  background-color: white;
+  width: 800px;
+  height: 600px;
+  overflow: auto;
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 6px 5px rgba(0, 0, 0, 0.1);
+}
+.registerPage .registerForm .title {
+  font-weight: bold;
+  font-size: 30px;
+  color: black;
+  padding: 30px;
+  text-align: center;
+  opacity: 0.8;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.registerPage .registerForm .input-item {
+  margin: 0 auto;
+  max-width: 500px;
+  padding-bottom: 30px;
+}
+.registerPage .registerForm .choose-item {
+  text-align: left;
+  display: flex;
+  gap: 3rem;
+  padding-left: 5px;
+  margin: 20px 0px;
+}
+.registerPage .registerForm .choose-item input {
+  transform: scale(1.5);
+}
+.registerPage .registerForm .choose-item label {
+  padding-left: 10px;
+}
+.registerPage .registerForm .dateofBirth {
+  text-align: left;
+  margin-bottom: 20px;
+}
+.registerPage .registerForm .dateofBirth input {
+  border-radius: 5px;
+  margin-left: 10px;
+  font-size: 15px;
+}
+.registerPage .registerForm .login-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.registerPage .registerForm .login-btn-wrapper .login-btn {
+  background: #656ef1;
+  border-radius: 20px;
+  border: none;
+  padding: 7px 40px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+.registerPage .registerForm .login {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0.7;
+}
+.registerPage .registerForm .login span {
+  color: rgb(35, 202, 239);
+  cursor: pointer;
+}
+.registerPage .registerForm .login span:hover {
+  color: rgb(255, 148, 140);
+}
+.registerPage .registerForm::-webkit-scrollbar {
+  display: none;
+}
+
+.error-message {
+  color: red;
+}/*# sourceMappingURL=RegisterPage.css.map */

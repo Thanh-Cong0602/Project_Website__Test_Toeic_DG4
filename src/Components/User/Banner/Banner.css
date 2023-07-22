@@ -1,0 +1,16 @@
+.banner {
+  margin: 10px;
+  border-radius: 10px;
+  height: 200px;
+  background: whitesmoke;
+  box-shadow: 1px 3px 1px #999;
+}
+.banner .bannerEnglish {
+  height: 200px;
+}
+.banner .bannerEnglish img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 200px;
+  width: 80%;
+}/*# sourceMappingURL=Banner.css.map */

@@ -1,0 +1,103 @@
+.registerPage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url('../../Assets/background_login.avif');
+  background-size: cover;
+  background-position: center;
+  background-position: center;
+
+  & .registerForm {
+    position: absolute;
+    background-color: white;
+    width: 800px;
+    height: 600px;
+    overflow: auto;
+    border-radius: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 1px 6px 5px rgb(0 0 0 / 10%);
+    & .title {
+      font-weight: bold;
+      font-size: 30px;
+      color: black;
+      padding: 30px;
+      text-align: center;
+      opacity: 0.8;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    & .input-item {
+      margin: 0 auto;
+      max-width: 500px;
+      padding-bottom: 30px;
+    }
+
+    & .choose-item {
+      text-align: left;
+      display: flex;
+      gap: 3rem;
+      padding-left: 5px;
+      margin: 20px 0px;
+
+      input {
+        transform: scale(1.5);
+      }
+
+      label {
+        padding-left: 10px;
+      }
+    }
+
+    & .dateofBirth {
+      text-align: left;
+      margin-bottom: 20px;
+
+      input {
+        border-radius: 5px;
+        margin-left: 10px;
+        font-size: 15px;
+      }
+    }
+
+    .login-btn-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+
+      & .login-btn {
+        background: #656ef1;
+        border-radius: 20px;
+        border: none;
+        padding: 7px 40px;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 700;
+      }
+    }
+
+    & .login {
+      text-align: center;
+      margin-top: 20px;
+      opacity: 0.7;
+      span {
+        color: rgb(35, 202, 239);
+        cursor: pointer;
+      }
+      span:hover {
+        color: rgb(255, 148, 140);
+      }
+    }
+  }
+
+  & .registerForm::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.error-message {
+  color: red;
+}
