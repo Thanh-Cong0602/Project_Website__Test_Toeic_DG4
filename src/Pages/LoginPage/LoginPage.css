@@ -1,0 +1,73 @@
+.loginPage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url("../../Assets/background_login.avif");
+  background-size: cover;
+  background-position: center;
+  background-position: center;
+}
+.loginPage .loginForm {
+  position: absolute;
+  background-color: white;
+  width: 800px;
+  height: 600px;
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 6px 5px rgba(0, 0, 0, 0.1);
+}
+.loginPage .loginForm .title {
+  font-weight: bold;
+  font-size: 40px;
+  color: black;
+  padding: 30px;
+  text-align: center;
+  opacity: 0.8;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.loginPage .loginForm .input-item {
+  margin: 0 auto;
+  max-width: 500px;
+  padding-bottom: 50px;
+}
+.loginPage .loginForm .login-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.loginPage .loginForm .login-btn-wrapper .login-btn {
+  background: #656ef1;
+  border-radius: 20px;
+  border: none;
+  padding: 10px 40px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+.loginPage .loginForm .login-btn-wrapper .login-btn:hover {
+  opacity: 0.7;
+}
+.loginPage .loginForm .register {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0.7;
+}
+.loginPage .loginForm .register span {
+  color: rgb(35, 202, 239);
+  cursor: pointer;
+}
+.loginPage .loginForm .register span:hover {
+  color: rgb(255, 148, 140);
+}
+
+.no-underline {
+  text-decoration: none;
+}
+
+.error-message {
+  color: red;
+}/*# sourceMappingURL=LoginPage.css.map */
