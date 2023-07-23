@@ -2,11 +2,6 @@
   text-align: center;
 }
 
-.App::-webkit-scrollbar {
-  width: 10em;
-  overflow: auto;
-  height: 2em;
-}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
