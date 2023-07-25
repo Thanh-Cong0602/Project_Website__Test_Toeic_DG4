@@ -31,7 +31,7 @@ const VocabularyCategories = () => {
         <div className='title'>
           <h1>TOEIC VOCABULARY (BY TOPIC)</h1>
         </div>
-        <div className='main-list-view'>
+        <div className='main-list-view' >
           <Row gutter={[16, 16]} data-aos="zoom-in" data-aos-delay="500">
             {categories.map((item, index) => (
               <Col span={8} key={item.id}>

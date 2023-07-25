@@ -1,0 +1,24 @@
+.practicePage {
+  & .title {
+    color: #239aef;
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 30px;
+  }
+
+  & .item-practice {
+    border-radius: 20px;
+    min-height: 300px;
+    background: whitesmoke;
+    box-shadow: 1px 4px 4px 0px #23caef;
+    cursor: pointer;
+    & .image_practice {
+      height: 200px;
+      width: 100%;
+    }
+  }
+}
+
+.practice__link {
+  color: black;
+}

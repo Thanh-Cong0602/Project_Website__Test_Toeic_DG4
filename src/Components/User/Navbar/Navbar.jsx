@@ -51,7 +51,7 @@ function Navbar() {
             <Col span={6}>
               <Link to={"/practice"} onClick={() => handleClickPage('practice')}>
                 <div className={`page-item ${currentPage === 'practice' ? 'btn-active' : ''}`}>
-                  Practice L&W
+                  Practice
                 </div>
               </Link>
             </Col>

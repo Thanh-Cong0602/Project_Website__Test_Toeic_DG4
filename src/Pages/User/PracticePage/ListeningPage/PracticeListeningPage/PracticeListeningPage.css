@@ -1,0 +1,68 @@
+.listen-practice-overview {
+  width: 99%;
+  border-radius: 10px;
+  height: 550px;
+  box-shadow: 0px 2px 2px 0.5px #999;
+  margin: 10px auto;
+}
+.listen-practice-overview .title {
+  margin: 40px;
+  font-size: 30px;
+  color: blue;
+  font-weight: 500;
+}
+.listen-practice-overview .icon-title {
+  padding: 0px 40px;
+  display: flex;
+  gap: 10px;
+}
+.listen-practice-overview .icon-title .icon-headphone {
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 3px 1px aqua;
+}
+.listen-practice-overview .icon-title .word {
+  margin: auto 0px;
+}
+.listen-practice-overview .main-practice-items {
+  max-width: 1200px;
+  margin: 30px auto;
+}
+.listen-practice-overview .main-practice-items .lesson-item {
+  border-radius: 20px;
+  height: 40px;
+  box-shadow: 1px 2px 2px 1px #999;
+  margin-bottom: 30px;
+}
+.listen-practice-overview .main-practice-items .practice_test_items .practice_test_item {
+  border-radius: 15px;
+  height: 150px;
+  box-shadow: 2px 2px 3px aquamarine;
+}
+.listen-practice-overview .main-practice-items .practice_test_items .practice_test_item .practice_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+.listen-practice-overview .main-practice-items .practice_test_items .practice_test_item .practice_box .test-progress {
+  padding-top: 25px;
+  padding-bottom: 20px;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 26px;
+  color: #c6ccd2;
+  width: 100%;
+  border-bottom: 1px dashed #c7cfe0;
+}
+.listen-practice-overview .main-practice-items .practice_test_items .practice_test_item .practice_box .test-name {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: justify;
+  color: #333;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}/*# sourceMappingURL=PracticeListeningPage.css.map */
