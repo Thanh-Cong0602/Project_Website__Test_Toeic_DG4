@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useCallback, useRef} from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import HeaderPage from '../HeaderPage/HeaderPage';
 import { getVocabularyCategories } from '../../../../Api/Service/vocabulary.service'
 import { deleteVocabularyCategory } from '../../../../Api/Service/vocabulary.service';
 import ModalVocabulary from './ModalVocabulary';
-import { Checkbox, Table, Space, Tag, Form, Modal, Button, Input} from 'antd';
+import { Checkbox, Table, Space, Tag, Form, Modal, Button, Input } from 'antd';
 import { ExclamationCircleOutlined, EditTwoTone, DeleteTwoTone, SearchOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import Highlighter from 'react-highlight-words'
@@ -66,16 +66,17 @@ function VocabularyCategories() {
             type="primary"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
-            size="small"
+            size="middle"
             style={{
               width: 90,
+              margin: '5px',
             }}
           >
             Search
           </Button>
           <Button
             onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
+            size="middle"
             style={{
               width: 90,
             }}
@@ -84,7 +85,7 @@ function VocabularyCategories() {
           </Button>
           <Button
             type="link"
-            size="small"
+            size="middle"
             onClick={() => {
               confirm({
                 closeDropdown: false,
@@ -97,7 +98,7 @@ function VocabularyCategories() {
           </Button>
           <Button
             type="link"
-            size="small"
+            size="middle"
             onClick={() => {
               close();
             }}
@@ -142,7 +143,8 @@ function VocabularyCategories() {
     {
       title: "STT",
       dataIndex: "num",
-      key: "num"
+      key: "num",
+      width: '10%',
     },
     {
       title: "Name",
@@ -161,14 +163,15 @@ function VocabularyCategories() {
       title: "Action",
       dataIndex: "action",
       key: "action",
+      width: '15%',
       render: (_, record) => (
         <Space size="large" style={{ cursor: "pointer" }}>
-          <Tag 
-          style={{ fontSize: '14px' }} color="green" onClick={() => onClickUpdate(record)}>
-              <EditTwoTone />
+          <Tag
+            style={{ fontSize: '14px' }} color="green" onClick={() => onClickUpdate(record)}>
+            <EditTwoTone />
           </Tag>
           <Tag style={{ fontSize: '14px' }} color="red" onClick={() => onClickDelete(record)}>
-           <DeleteTwoTone style={{color: 'red !important'}}/>
+            <DeleteTwoTone style={{ color: 'red !important' }} />
           </Tag>
         </Space>
       ),
@@ -225,6 +228,7 @@ function VocabularyCategories() {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
   }, [])
+
   const onClose = () => {
     setIsOpenForm(false);
     setId("");

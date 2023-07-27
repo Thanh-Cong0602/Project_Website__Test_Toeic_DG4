@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../ModalCustom.css'
 import { updateVocabularyCategory } from '../../../../Api/Service/vocabulary.service';
 import { createVocabularyCategory } from '../../../../Api/Service/vocabulary.service';
@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 
 function ModalVocabulary(props) {
   const { isOpenForm, onClose, title, form, id, reloadData } = props;
-  const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
@@ -23,15 +22,17 @@ function ModalVocabulary(props) {
     form.resetFields();
   };
 
-  const handleUpdateVocabulary = useCallback(values => {
-    updateVocabularyCategory(`vocabularyCategories?id=${id}`, values).then((res) => {
-      handleCancel()
-      toast.success(res.data.message, { autoClose: 2000 })
-      reloadData()
-    }).catch((err) => {
-      toast.error(err.response.data.message, { autoClose: 2000 })
-    })
-  }, [handleCancel, reloadData])
+  const handleUpdateVocabulary = (values) => {
+    updateVocabularyCategory(`vocabularyCategories?id=${id}`, values)
+      .then((res) => {
+        handleCancel();
+        toast.success(res.data.message, { autoClose: 2000 });
+        reloadData();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, { autoClose: 2000 });
+      });
+  };
 
   const handleCreateVocabulary = (values) => {
     createVocabularyCategory('vocabularyCategories/create', values).then((res) => {
@@ -41,15 +42,19 @@ function ModalVocabulary(props) {
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }
-  
+  };
+
   const onFinish = (values) => {
     {
       values.id
         ? handleUpdateVocabulary(values)
         : handleCreateVocabulary(values)
     }
-  }
+  };
+
+  const onFinishFailed = () => {
+    toast.error("Create Vocabulary Category Failed", { autoClose: 1000 })
+  };
   return (
     <Modal
       className='custom__modal'
@@ -59,27 +64,31 @@ function ModalVocabulary(props) {
       width={500}
       onCancel={handleCancel}
       footer={[
-        <Button form="formVocabulary" key="back" onClick={handleCancel}>
+        <Button form="formCategory"
+          key="back"
+          onClick={handleCancel}>
           Cancel
         </Button>,
         <Button
-          form="formVocabulary"
+          form="formCategory"
           key="submit"
           type="primary"
           htmlType="submit"
-          loading={isLoading} >
+        >
           Save
         </Button>,
       ]}
     >
-      <Form id='formVocabulary' form={form} onFinish={onFinish}>
+      <Form id='formCategory' form={form}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}>
         <Form.Item name="id" hidden="true">
           <Input />
         </Form.Item>
-        <Form.Item label="Name" name="name" >
+        <Form.Item label="Name" name="name"
+          rules={[{ required: true, },]}>
           <Input className='custom__input_modal' />
         </Form.Item>
-
         <Form.Item label="Status" name="isActive" valuePropName='checked'>
           <Checkbox checked={status} onChange={handleChange}></Checkbox>
         </Form.Item>

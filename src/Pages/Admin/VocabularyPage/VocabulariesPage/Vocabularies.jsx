@@ -66,16 +66,18 @@ function Vocabularies() {
             type="primary"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
-            size="small"
+            size="middle"
             style={{
+              margin: '5px',
               width: 90,
             }}
           >
             Search
           </Button>
           <Button
+          danger
             onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
+            size="middle"
             style={{
               width: 90,
             }}
@@ -84,7 +86,7 @@ function Vocabularies() {
           </Button>
           <Button
             type="link"
-            size="small"
+            size="middle"
             onClick={() => {
               confirm({
                 closeDropdown: false,
@@ -97,12 +99,12 @@ function Vocabularies() {
           </Button>
           <Button
             type="link"
-            size="small"
+            size="middle"
             onClick={() => {
               close();
             }}
           >
-            close
+            Close
           </Button>
         </Space>
       </div>
@@ -156,39 +158,39 @@ function Vocabularies() {
     {
       title: "STT",
       dataIndex: "num",
-      key: "num"
+      key: "num",
+      width: '10%',
     },
     {
       title: "Word",
       dataIndex: "word",
       key: "word",
-      render: (text) => <a>{text}</a>,
       ...getColumnSearchProps('word'),
     },
     {
       title: "Pronounce",
       dataIndex: "pronounce",
       key: "pronounce",
-      render: (text) => <a>{text}</a>,
       ...getColumnSearchProps('pronounce'),
     },
     {
       title: "Mean",
       dataIndex: "mean",
       key: "mean",
-      render: (text) => <a>{text}</a>,
       ...getColumnSearchProps('mean'),
     },
     {
       title: "Status",
       dataIndex: "isActive",
       key: "isActive",
+      width: '10%',
       render: (text) => <Checkbox checked={text}></Checkbox>,
     },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
+      width: '15%',
       render: (_, record) => (
         <Space size="large" style={{ cursor: "pointer" }}>
           <Tag style={{ fontSize: '14px' }} color="green"
@@ -207,7 +209,7 @@ function Vocabularies() {
     Modal.confirm({
       title: "Confirm",
       icon: <ExclamationCircleOutlined />,
-      content: "Are you sure delete vocabulary category?",
+      content: "Are you sure delete vocabulary?",
       okText: "Delete",
       cancelText: "Cancel",
       onOk: () => handleDelete(values),

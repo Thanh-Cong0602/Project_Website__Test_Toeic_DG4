@@ -97,7 +97,7 @@ function ManageAccount() {
               close();
             }}
           >
-            close
+            Close
           </Button>
         </Space>
       </div>
@@ -138,23 +138,27 @@ function ManageAccount() {
       title: "STT",
       dataIndex: "num",
       key: "num",
+      width: '10%',
+
     },
     {
       title: "Username",
       dataIndex: "username",
       key: "username",
-      ...getColumnSearchProps('username')
+      render: (text) => <a>{text}</a>,
+      ...getColumnSearchProps('username'),
     },
     {
       title: "Password",
       dataIndex: "password",
-      key: "password"
+      key: "password",
+      width: '40%',
     },
     {
       title: "Role",
       dataIndex: "role",
       key: "role",
-      ...getColumnSearchProps('role')
+      ...getColumnSearchProps('role'),
     },
     {
       title: "Status",
