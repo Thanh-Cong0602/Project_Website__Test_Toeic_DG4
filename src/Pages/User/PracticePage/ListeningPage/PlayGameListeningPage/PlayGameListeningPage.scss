@@ -68,7 +68,9 @@
       background: white;
       margin: 30px 0px;
       padding-bottom: 50px;
-
+      & .audio__question {
+        padding:30px;
+      }
       & .main-question {
         & .question-image {
           padding-top: 10px;

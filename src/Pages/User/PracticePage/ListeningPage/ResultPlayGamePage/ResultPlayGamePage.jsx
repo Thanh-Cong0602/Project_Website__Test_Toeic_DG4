@@ -4,7 +4,8 @@ import { Bezier2 } from 'react-bootstrap-icons'
 import PlayGameListeningPage from '../PlayGameListeningPage/PlayGameListeningPage'
 import Picture_Part1 from '../../../../../Assets/image_part1.png'
 import AudioTest from '../AudioFile'
-import AudioController from '../AudioController/AudioController'
+import { Progress, Space } from 'antd';
+import { useSelector } from 'react-redux'
 import AOS from 'aos';
 import 'aos/dist/aos.css'
 AOS.init();
@@ -12,14 +13,16 @@ AOS.init();
 function ResultPlayGamePage() {
   const [isShowPlayGameListening, setIsShowPlayGameListening] = useState(false)
   const [isShowResult, setIsShowResult] = useState(false)
+  const correctAnswer = useSelector(state => state.practice.saveResultPlayGameListening)
   const handleshowQuestionListening = () => {
     setIsShowPlayGameListening(true)
   }
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const handleQuestionClick = (questionIndex) => {
     setCurrentQuestionIndex(questionIndex)
   }
-
+  const percentageCorrect = Math.round((correctAnswer / AudioTest.length) * 100);
   return (
     <>
       {!isShowPlayGameListening ?
@@ -46,7 +49,7 @@ function ResultPlayGamePage() {
                     </div>
                   </div>
                 </div>
-                <div>
+                <div className='grid__playgame_right'>
                   <div className='result-questions-listen' data-aos="fade-up-left" data-aos-delay="400">
                     <div className='main-result-overview-bgr'>
                       <span className='bubble-top-left'></span>
@@ -60,16 +63,21 @@ function ResultPlayGamePage() {
                       <div className='main-percentage'>
                         <div className='main-percentage-box'></div>
                         <div className='box-layer2'></div>
-                        <div className='box-layer3'></div>
+                        <div className='box-layer3'>
+                          <Space wrap>
+                            <Progress type="circle" percent={percentageCorrect} strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }}
+                              style={{ fontWeight: '700' }} />
+                          </Space>
+                        </div>
                         <span className='percentage-text'>
-                          0%
+
                         </span>
                       </div>
                       <div className='main-statistics'>
                         <div className='main-statistics-result'>
                           <div className='result-item'>
                             <div className='result-total'>
-                              12
+                              {AudioTest.length}
                             </div>
                             <div className='result-text'>
                               Total
@@ -77,7 +85,7 @@ function ResultPlayGamePage() {
                           </div>
                           <div className='result-item'>
                             <div className='result-correct'>
-                              9
+                              {correctAnswer}
                             </div>
                             <div className='result-text'>
                               Correct
@@ -85,7 +93,7 @@ function ResultPlayGamePage() {
                           </div>
                           <div className='result-item'>
                             <div className='result-incorrect'>
-                              3
+                              {AudioTest.length - correctAnswer}
                             </div>
                             <div className='result-text'>
                               Incorrect
@@ -110,7 +118,7 @@ function ResultPlayGamePage() {
                         <div className='category-item'>
                           <div className='category-item-circle'>
                             <button className='category-total'>
-                              12
+                              {AudioTest.length}
                             </button>
                           </div>
                           <div className='item-text-total'>
@@ -132,7 +140,7 @@ function ResultPlayGamePage() {
                         <div className='category-item'>
                           <div className='category-item-circle'>
                             <button className='category-correct'>
-                              6
+                              {correctAnswer}
                             </button>
                           </div>
                           <div className='item-text-correct'>
@@ -143,7 +151,7 @@ function ResultPlayGamePage() {
                         <div className='category-item'>
                           <div className='category-item-circle'>
                             <button className='category-incorrect'>
-                              6
+                              {AudioTest.length - correctAnswer}
                             </button>
                           </div>
                           <div className='item-text-incorrect'>
@@ -153,14 +161,19 @@ function ResultPlayGamePage() {
                       </div>
                     </div>
                   </div>
-                  {isShowResult ? (
+                  {!isShowResult ? (
                     <div className='main-show-answer'>
-                      <div className='number-question'>Question 1</div>
-                      <div className='audio-controller'>
-                        <AudioController AudioTest={AudioTest} currentQuestionIndex={currentQuestionIndex} />
-                      </div>
-                      <img src={Picture_Part1} />
-
+                      {AudioTest.map((item, index) => (
+                        <div>
+                          <div className='number-question'>Question {index + 1}</div>
+                          <div className='audio__question'>
+                            <audio controls key={Math.random()} className='audio__question'>
+                              <source src={AudioTest[index].audioSrc}></source>
+                            </audio>
+                          </div>
+                          <img src={Picture_Part1} />
+                        </div>
+                      ))}
                     </div>
                   ) :
                     (<>

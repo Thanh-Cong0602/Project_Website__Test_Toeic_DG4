@@ -62,6 +62,9 @@
   margin: 30px 0px;
   padding-bottom: 50px;
 }
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .audio__question {
+  padding: 30px;
+}
 .main-playgame-listen .gird-playgame-listen .show-questions-listen .main-question .question-image {
   padding-top: 10px;
 }

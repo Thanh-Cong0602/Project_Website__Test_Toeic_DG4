@@ -1,0 +1,3 @@
+export const practiceConstants = {
+  SAVE_RESULT_PLAYGAME_LISTENING: 'RESULT_FROM_PLAYGAME_LISTENING'
+}

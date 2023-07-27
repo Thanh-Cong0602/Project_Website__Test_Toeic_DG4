@@ -2,32 +2,49 @@ import React, { useRef, useState, useEffect } from 'react'
 import './PlayGameListeningPage.css'
 import Picture_Part1 from '../../../../../Assets/image_part1.png'
 import AudioTest from '../AudioFile'
-import AudioController from '../AudioController/AudioController';
+import { practiceActions } from '../../../../../Redux/_actions'
 import AOS from 'aos';
 import 'aos/dist/aos.css'
+import { useDispatch } from 'react-redux';
 AOS.init();
 
 function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) {
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const handleAnswerClick = (answer) => {
-    setSelectedAnswer(answer);
-  };
-
+  const [selectedAnswer, setSelectedAnswer] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isLastQuestion, setIsLastQuestion] = useState(false);
+  const correctAnswers = ["A", "B", "C", "D", "A", "B"]
+  const dispatch = useDispatch()
+  const handleAnswerChange = (answer) => {
+    const updatedAnswer = [...selectedAnswer]
+    updatedAnswer[currentQuestionIndex] = answer
+    setSelectedAnswer(updatedAnswer);
+  };
+
   const handleQuestionClick = (questionIndex) => {
     setCurrentQuestionIndex(questionIndex)
   }
+
   const handleNextQuestion = () => {
     if (currentQuestionIndex < AudioTest.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     }
   }
-  const handleSubmitAnswer = () => {
+  const compareAnswers = () => {
+    let count = 0;
+    for (let i = 0; i < AudioTest.length; i++) {
+      if (selectedAnswer[i] == correctAnswers[i]) {
+        count += 1;
+      }
+    }
+    dispatch(practiceActions.saveResultPlayGameListening(count))
     setIsShowPlayGameListening(false)
     setIsShowResult(true)
-    window.scrollTo({ top: 0, behavior: 'smooth', playbackRate: 2.0 });
-  }
+    window.scrollTo({ top: 0 });
+  };
+
+  const handleSubmitAnswer = () => {
+    compareAnswers();
+  };
 
   useEffect(() => {
     setIsLastQuestion(currentQuestionIndex === AudioTest.length - 1);
@@ -56,31 +73,34 @@ function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) 
         </div>
 
         <div className='show-questions-listen' data-aos="fade-up-left" data-aos-delay="400">
-    
-          <AudioController AudioTest={AudioTest} currentQuestionIndex={currentQuestionIndex} />
+          <audio controls key={Math.random()} className='audio__question'>
+            <source src={AudioTest[currentQuestionIndex].audioSrc}></source>
+          </audio>
           <div className='main-question'>
             <div className='question-image'>
               <img src={Picture_Part1} />
             </div>
             <div className='selected-answer'>
-              <div className='answer-item' onClick={() => handleAnswerClick('A')}>
+              <div className='answer-item' onClick={() => handleAnswerChange('A')}>
                 <input type="radio" id='answerA' className='custom-radio'
-                  checked={selectedAnswer === 'A'} />
+                  checked={selectedAnswer[currentQuestionIndex] === 'A'} />
                 <label htmlFor="answerA">(A)</label>
               </div>
-              <div className='answer-item' onClick={() => handleAnswerClick('B')}>
+              <div className='answer-item' onClick={() => handleAnswerChange('B')}>
                 <input type="radio" id='answerB' className='custom-radio'
-                  checked={selectedAnswer === 'B'} />
+                  checked={selectedAnswer[currentQuestionIndex] === 'B'}
+                  onChange={handleAnswerChange}
+                />
                 <label htmlFor="answerB">(B)</label>
               </div>
-              <div className='answer-item' onClick={() => handleAnswerClick('C')}>
+              <div className='answer-item' onClick={() => handleAnswerChange('C')}>
                 <input type="radio" id='answerC' className='custom-radio'
-                  checked={selectedAnswer === 'C'} />
+                  checked={selectedAnswer[currentQuestionIndex] === 'C'} />
                 <label htmlFor="answerC">(C)</label>
               </div>
-              <div className='answer-item' onClick={() => handleAnswerClick('D')}>
+              <div className='answer-item' onClick={() => handleAnswerChange('D')}>
                 <input type="radio" id='answerD' className='custom-radio'
-                  checked={selectedAnswer === 'D'} />
+                  checked={selectedAnswer[currentQuestionIndex] === 'D'} />
                 <label htmlFor="answerD">(D)</label>
               </div>
             </div>
