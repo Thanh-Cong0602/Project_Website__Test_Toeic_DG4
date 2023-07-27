@@ -44,7 +44,6 @@ function RegisterPage() {
   };
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(user)
     const errors = {};
     if (hasSpecialCharacters(user.username)) {
       errors.username = 'Username cannot contain special characters.'

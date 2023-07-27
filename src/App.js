@@ -1,8 +1,9 @@
 import './App.css';
 import { useEffect } from 'react';
-import { Routes, Route, BrowserRouter, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
+import { ToastContainer } from 'react-toastify';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import User from './Pages/User/User';
@@ -17,7 +18,7 @@ function App() {
     }
   }, [isLoggedIn]);
   return (
-    <div className="App" >
+    <div>
       <Routes>
         <Route path="/login" exact element={<LoginPage />} />
       </Routes>
@@ -29,6 +30,8 @@ function App() {
           {role === "user" ? <User /> : <Admin />}
         </>
       ) : null}
+      <ToastContainer className="toast-position"
+        position="top-center"></ToastContainer>
     </div>
   );
 }

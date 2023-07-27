@@ -7,3 +7,11 @@ export function loginAPI(endpoint, inputs) {
 export function registerAPI(endpoint, user) {
    return API.post(`${API_BASE.apiUrl}/${endpoint}`, user)
 }
+
+export function logoutAPI(endpoint) {
+  return API.post(`${API_BASE.apiUrl}/${endpoint}`)
+}
+export function getAllAccounts(endpoint) {
+  return API.get(`${API_BASE.apiUrl}/${endpoint}`)
+}
+
