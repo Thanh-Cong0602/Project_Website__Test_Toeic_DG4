@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { getAllVocabularies } from '../../../../Api/Service/vocabulary.service'
 import { deleteVocabulary } from '../../../../Api/Service/vocabulary.service';
+import { getVocabularyCategories } from '../../../../Api/Service/vocabulary.service';
 import HeaderPage from '../HeaderPage/HeaderPage';
 import ModalAllVocabularies from './ModalAllVocabularies';
 import { toast } from "react-toastify";
@@ -10,37 +11,63 @@ import Highlighter from 'react-highlight-words'
 
 function Vocabularies() {
   const [vocabularies, setVocabularies] = useState([]);
+  const [categoryMap, setCategoryMap] = useState({});
   const [isLoading, setIsLoading] = useState(false)
   const [isOpenForm, setIsOpenForm] = useState(false);
   const [id, setId] = useState("");
   const [form] = Form.useForm();
+
   useEffect(() => {
-    setIsLoading(true)
-    getAllVocabularies('vocabularies').then((res) => {
-      const addSttToVocabularies = res.data.data.map((item, index) => ({
-        ...item,
-        num: index + 1,
+    const fetchCategories = async () => {
+      try {
+        const res = await getVocabularyCategories('vocabularyCategories');
+        const map = res.data.data.reduce((accumulator, category) => {
+          accumulator[category.id] = category.name;
+          return accumulator;
+        }, {});
+        setCategoryMap(map);
+      } catch (err) {
+        toast.error(err, { autoClose: 2000 })
       }
-      ))
-      setVocabularies(addSttToVocabularies)
-      setIsLoading(false)
-    }).catch((err) => {
-      toast.error(err.response.data.message, { autoClose: 2000 })
-    })
-  }, [])
+    };
+
+    fetchCategories();
+    const fetchVocabularies = async () => {
+      try {
+        setIsLoading(true)
+        const res = await getAllVocabularies('vocabularies');
+        const vocabulariesWithCategory = res.data.data.map((item, index) => {
+          const categoryNames = item.categoryIds.map((categoryId) => categoryMap[categoryId]);
+          return {
+            ...item,
+            num: index + 1,
+            categoryNames: categoryNames,
+          };
+        });
+        setVocabularies(vocabulariesWithCategory);
+        setIsLoading(false);
+      } catch (err) {
+        toast.error(err, { autoClose: 2000 })
+      }
+    };
+
+    fetchVocabularies();
+  }, []);
 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm()
     setSearchText(selectedKeys[0])
     setSearchedColumn(dataIndex)
-  }
+  };
+
   const handleReset = (clearFilters) => {
     clearFilters()
     setSearchText('')
-  }
+  };
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -75,7 +102,7 @@ function Vocabularies() {
             Search
           </Button>
           <Button
-          danger
+            danger
             onClick={() => clearFilters && handleReset(clearFilters)}
             size="middle"
             style={{
@@ -143,11 +170,15 @@ function Vocabularies() {
   const reloadData = useCallback(() => {
     setIsLoading(true)
     getAllVocabularies('vocabularies').then((res) => {
-      const addSttToCategories = res.data.data.map((item, index) => ({
-        ...item,
-        num: index + 1,
-      }))
-      setVocabularies(addSttToCategories)
+      const vocabulariesWithCategory = res.data.data.map((item, index) => {
+        const categoryNames = item.categoryIds.map((categoryId) => categoryMap[categoryId]);
+        return {
+          ...item,
+          num: index + 1,
+          categoryNames: categoryNames,
+        };
+      });
+      setVocabularies(vocabulariesWithCategory)
       setIsLoading(false)
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
@@ -180,6 +211,18 @@ function Vocabularies() {
       ...getColumnSearchProps('mean'),
     },
     {
+      title: "Category",
+      dataIndex: "categoryNames",
+      key: "categoryNames",
+      render: (categoryNames) => (
+        <>
+          {categoryNames.map((categoryName) => (
+            <div key={categoryName}>{categoryName}</div>
+          ))}
+        </>
+      ),
+    },
+    {
       title: "Status",
       dataIndex: "isActive",
       key: "isActive",
@@ -205,6 +248,7 @@ function Vocabularies() {
       ),
     }
   ];
+
   const onClickDelete = (values) => {
     Modal.confirm({
       title: "Confirm",
@@ -215,7 +259,8 @@ function Vocabularies() {
       onOk: () => handleDelete(values),
       confirmLoading: isLoading,
     });
-  }
+  };
+
   const handleDelete = (values) => {
     deleteVocabulary(`vocabularies?id=${values.id}`).then((res) => {
       toast.success(res.data.message, { autoClose: 2000 })
@@ -223,7 +268,8 @@ function Vocabularies() {
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }
+  };
+
   const onClickOpenModal = useCallback((record) => {
     const requestBody = {
       id: record.id,
