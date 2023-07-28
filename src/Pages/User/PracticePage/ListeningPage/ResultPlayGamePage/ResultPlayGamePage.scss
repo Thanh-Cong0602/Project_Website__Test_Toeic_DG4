@@ -1,4 +1,4 @@
-.main-result-playgame-listen {
+.main__result__playgame__listen {
   padding: 0 24px;
   background: #f2f3f7;
 
@@ -12,7 +12,6 @@
       position: sticky;
       top: 0;
       max-height: 100vh;
-      overflow: auto;
 
       & .title {
         text-align: center;
@@ -63,7 +62,7 @@
       }
     }
 
-    & .grid__playgame_right {
+    & .grid__playgame__right {
       & .result-questions-listen {
         min-height: 250px;
         position: relative;
@@ -330,7 +329,7 @@
         }
       }
 
-      & .main-show-answer {
+      & .main__show__answer {
         min-height: 250px;
         position: relative;
         margin-top: 50px;
@@ -339,17 +338,57 @@
         border-radius: 15px;
         padding: 10px;
 
-        & .number-question {
-          text-align: left;
-          color: #1d1d1d;
-          font-weight: 600;
-          height: 20px;
-          padding: 10px;
-          font-size: 20px;
+        & .show_answer_item {
+          border-bottom: 1px solid black;
+          margin: 0px 20px;
+
+          & .number-question {
+            text-align: left;
+            color: #1d1d1d;
+            font-weight: 600;
+            height: 20px;
+            padding: 10px;
+            font-size: 20px;
+          }
+
+          & .audio__question {
+            padding: 20px;
+          }
         }
 
-        & .audio__question {
-          padding: 20px;
+        & .show_correct_answer {
+          padding: 30px 0px;
+
+          & .answer_item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin: 10px;
+
+            & .custom_circle {
+              background: red;
+              object-fit: cover;
+              border-radius: 10px;
+              height: 25px;
+              width: 25px;
+              @extend .flex;
+            }
+
+            label {
+              font-size: 20px;
+              font-weight: 400;
+              cursor: pointer;
+              padding-bottom: 3px;
+              text-decoration: line-through;
+            }
+          }
+
+        }
+
+        & .show_transcript_answer {
+          text-align: left;
+          padding: 10px;
         }
 
       }

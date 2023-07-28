@@ -6,6 +6,8 @@ import Picture_Part1 from '../../../../../Assets/image_part1.png'
 import AudioTest from '../AudioFile'
 import { Progress, Space } from 'antd';
 import { useSelector } from 'react-redux'
+import { Circle } from 'react-bootstrap-icons'
+import { Check, X } from 'react-bootstrap-icons'
 import AOS from 'aos';
 import 'aos/dist/aos.css'
 AOS.init();
@@ -13,24 +15,23 @@ AOS.init();
 function ResultPlayGamePage() {
   const [isShowPlayGameListening, setIsShowPlayGameListening] = useState(false)
   const [isShowResult, setIsShowResult] = useState(false)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const correctAnswer = useSelector(state => state.practice.saveResultPlayGameListening)
+
   const handleshowQuestionListening = () => {
     setIsShowPlayGameListening(true)
-  }
+  };
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const handleQuestionClick = (questionIndex) => {
-    setCurrentQuestionIndex(questionIndex)
-  }
   const percentageCorrect = Math.round((correctAnswer / AudioTest.length) * 100);
+  
   return (
     <>
       {!isShowPlayGameListening ?
         (
           <div>
-            <div className='main-result-playgame-listen'>
+            <div className='main__result__playgame__listen'>
               <div className='gird-playgame-listen'>
-                <div className='list-question-listen' data-aos="fade-up-right" data-aos-delay="400">
+                <div className='list-question-listen' data-aos="fade-up-right" data-aos-delay="400"  data-aos-once="true" >
                   <div className='title'>
                     Part 1
                   </div>
@@ -40,8 +41,7 @@ function ResultPlayGamePage() {
                         <div className={`btn-question
                           ${currentQuestionIndex === index ? 'currentQuestion' : ''}
                           `}
-                          key={index}
-                          onClick={() => handleQuestionClick(index)}>
+                          key={index}>
 
                           <span className='num-question'>{index + 1}</span>
                         </div>
@@ -49,7 +49,7 @@ function ResultPlayGamePage() {
                     </div>
                   </div>
                 </div>
-                <div className='grid__playgame_right'>
+                <div className='grid__playgame__right'>
                   <div className='result-questions-listen' data-aos="fade-up-left" data-aos-delay="400">
                     <div className='main-result-overview-bgr'>
                       <span className='bubble-top-left'></span>
@@ -162,9 +162,9 @@ function ResultPlayGamePage() {
                     </div>
                   </div>
                   {!isShowResult ? (
-                    <div className='main-show-answer'>
+                    <div className='main__show__answer'>
                       {AudioTest.map((item, index) => (
-                        <div>
+                        <div className='show_answer_item'>
                           <div className='number-question'>Question {index + 1}</div>
                           <div className='audio__question'>
                             <audio controls key={Math.random()} className='audio__question'>
@@ -172,6 +172,41 @@ function ResultPlayGamePage() {
                             </audio>
                           </div>
                           <img src={Picture_Part1} />
+                          <div className='show_correct_answer'>
+                            <div className='answer_item'>
+                              <div className='custom_circle'>
+                                <Check size={20} />
+                              </div>
+                              <label>(A)</label>
+                            </div>
+                            <div className='answer_item'>
+                              <div className='custom_circle'>
+                                <X size={20} />
+                              </div>
+                              <label>(B)</label>
+                            </div>
+                            <div className='answer_item'>
+                              <div className='custom_circle'>
+                                <Check size={20} />
+                              </div>
+                              <label>(C)</label>
+                            </div>
+                            <div className='answer_item'>
+                              <div className='custom_circle'>
+                                <X size={20} />
+                              </div>
+                              <label>(D)</label>
+                            </div>
+                          </div>
+                    
+                          <div className='show_transcript_answer'>
+                            <h3>Transcript</h3>
+                            <p>(A) The woman is talking on the phone.</p>
+                            <p>(B) The woman is using her cell phone.</p>
+                            <p>(C) The woman is typing on the laptop.</p>
+                            <p>(D) The woman is writing in her notebook..</p>
+
+                          </div>
                         </div>
                       ))}
                     </div>

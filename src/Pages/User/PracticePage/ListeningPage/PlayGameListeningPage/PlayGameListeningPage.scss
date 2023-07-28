@@ -24,6 +24,7 @@
         width: 300px;
         background: white;
         margin-top: 50px;
+
         & .allQuestions {
           padding: 20px;
           display: grid;
@@ -42,6 +43,7 @@
             box-sizing: border-box;
             background: #f2f3f7;
             cursor: pointer;
+
             & .num-question {
               font-size: 16px;
               margin-bottom: 2px;
@@ -68,9 +70,11 @@
       background: white;
       margin: 30px 0px;
       padding-bottom: 50px;
+
       & .audio__question {
-        padding:30px;
+        padding: 30px;
       }
+
       & .main-question {
         & .question-image {
           padding-top: 10px;
@@ -109,6 +113,7 @@
         & .btn-common-attributes-pink {
           width: 130px !important;
         }
+
         & .btn-common-attributes-aqua {
           width: 130px !important;
         }
@@ -146,4 +151,8 @@
 
 .ant-slider-track {
   background-color: black !important;
+}
+
+.selected {
+  background: #999 !important;
 }

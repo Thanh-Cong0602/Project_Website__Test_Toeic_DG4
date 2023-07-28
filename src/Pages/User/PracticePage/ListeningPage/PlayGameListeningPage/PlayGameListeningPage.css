@@ -127,4 +127,8 @@
 
 .ant-slider-track {
   background-color: black !important;
+}
+
+.selected {
+  background: #999 !important;
 }/*# sourceMappingURL=PlayGameListeningPage.css.map */

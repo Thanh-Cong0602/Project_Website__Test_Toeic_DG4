@@ -20,9 +20,6 @@ function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) 
     setSelectedAnswer(updatedAnswer);
   };
 
-  const handleQuestionClick = (questionIndex) => {
-    setCurrentQuestionIndex(questionIndex)
-  }
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < AudioTest.length - 1) {
@@ -62,9 +59,9 @@ function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) 
               {AudioTest.map((item, index) => (
                 <div className={`btn-question
                 ${currentQuestionIndex === index ? 'currentQuestion' : ''}
+                ${selectedAnswer[index] ? 'selected' : ''}
                 `}
-                  key={index}
-                  onClick={() => handleQuestionClick(index)}>
+                  key={index}>
                   <div className='num-question'>{index + 1}</div>
                 </div>
               ))}
