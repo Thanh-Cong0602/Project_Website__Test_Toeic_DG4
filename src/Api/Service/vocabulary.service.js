@@ -37,3 +37,14 @@ export function getAllQuestionVocabulary(endpoint) {
   return API.get(`${API_BASE.apiUrl}/${endpoint}`)
 }
 
+export function createQuestion(endpoint, body) {
+  return API.post(`${API_BASE.apiUrl}/${endpoint}`, body)
+}
+
+export function updateQuestion(endpoint, body) {
+  return API.put(`${API_BASE.apiUrl}/${endpoint}`, body)
+}
+
+export function deleteQuestion(endpoint) {
+  return API.delete(`${API_BASE.apiUrl}/${endpoint}`)
+}

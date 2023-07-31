@@ -125,6 +125,7 @@ function ModalAllVocabularies(props) {
             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
             defaultValue={form.getFieldValue('categoryIds') ? form.getFieldValue('categoryIds') : []}
             options={options}
+            optionFilterProp="label"
           ></Select>
         </Form.Item>
         <Form.Item label="Status" name="isActive" valuePropName='checked'>

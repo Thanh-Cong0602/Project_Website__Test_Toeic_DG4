@@ -11,63 +11,54 @@ import Highlighter from 'react-highlight-words'
 
 function Vocabularies() {
   const [vocabularies, setVocabularies] = useState([]);
-  const [categoryMap, setCategoryMap] = useState({});
   const [isLoading, setIsLoading] = useState(false)
   const [isOpenForm, setIsOpenForm] = useState(false);
   const [id, setId] = useState("");
   const [form] = Form.useForm();
+  const [categoryMap, setCategoryMap] = useState({});
+
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await getVocabularyCategories('vocabularyCategories');
-        const map = res.data.data.reduce((accumulator, category) => {
-          accumulator[category.id] = category.name;
-          return accumulator;
-        }, {});
-        setCategoryMap(map);
-      } catch (err) {
-        toast.error(err, { autoClose: 2000 })
-      }
-    };
+    setIsLoading(true);
+    let tempCategoryMap = {};
+    getVocabularyCategories('vocabularyCategories').then((resCategories) => {
+      tempCategoryMap = resCategories.data.data.reduce((accumulator, category) => {
+        accumulator[category.id] = category.name;
+        return accumulator;
+      }, {});
+      setCategoryMap(tempCategoryMap);
+      return getAllVocabularies('vocabularies');
 
-    fetchCategories();
-    const fetchVocabularies = async () => {
-      try {
-        setIsLoading(true)
-        const res = await getAllVocabularies('vocabularies');
-        const vocabulariesWithCategory = res.data.data.map((item, index) => {
-          const categoryNames = item.categoryIds.map((categoryId) => categoryMap[categoryId]);
-          return {
-            ...item,
-            num: index + 1,
-            categoryNames: categoryNames,
-          };
-        });
-        setVocabularies(vocabulariesWithCategory);
-        setIsLoading(false);
-      } catch (err) {
-        toast.error(err, { autoClose: 2000 })
-      }
-    };
+    }).then((resVocabularies) => {
+      const vocabulariesWithCategory = resVocabularies.data.data.map((item, index) => {
+        const categoryNames = item.categoryIds.map((categoryId) => tempCategoryMap[categoryId]);
+        return {
+          ...item,
+          num: index + 1,
+          categoryNames: categoryNames,
+        };
+      });
+      setVocabularies(vocabulariesWithCategory);
+      setIsLoading(false);
 
-    fetchVocabularies();
+    }).catch((err) => {
+      toast.error(err, { autoClose: 2000 });
+      setIsLoading(false);
+    });
   }, []);
 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
-
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm()
     setSearchText(selectedKeys[0])
     setSearchedColumn(dataIndex)
-  };
-
+  }
   const handleReset = (clearFilters) => {
     clearFilters()
     setSearchText('')
-  };
+  }
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -171,19 +162,19 @@ function Vocabularies() {
     setIsLoading(true)
     getAllVocabularies('vocabularies').then((res) => {
       const vocabulariesWithCategory = res.data.data.map((item, index) => {
-        const categoryNames = item.categoryIds.map((categoryId) => categoryMap[categoryId]);
+        const categoryNames = item.categoryIds.map((categoryId) => categoryMap[categoryId])
         return {
           ...item,
           num: index + 1,
           categoryNames: categoryNames,
-        };
-      });
+        }
+      })
       setVocabularies(vocabulariesWithCategory)
       setIsLoading(false)
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }, [])
+  }, [isOpenForm])
 
   const columns = [
     {
@@ -236,11 +227,11 @@ function Vocabularies() {
       width: '15%',
       render: (_, record) => (
         <Space size="large" style={{ cursor: "pointer" }}>
-          <Tag style={{ fontSize: '14px' }} color="green"
+          <Tag style={{ fontSize: '16px' }} color="green"
             onClick={() => onClickUpdate(record)} >
             <EditTwoTone />
           </Tag>
-          <Tag style={{ fontSize: '14px' }} color="red"
+          <Tag style={{ fontSize: '16px' }} color="red"
             onClick={() => onClickDelete(record)}>
             <DeleteTwoTone />
           </Tag>
