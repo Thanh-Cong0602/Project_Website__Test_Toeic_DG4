@@ -86,7 +86,7 @@ function ModalVocabulary(props) {
           <Input />
         </Form.Item>
         <Form.Item label="Name" name="name"
-          rules={[{ required: true, },]}>
+          rules={[{ required: true, message: 'Please input Category Name' },]}>
           <Input className='custom__input_modal' />
         </Form.Item>
         <Form.Item label="Status" name="isActive" valuePropName='checked'>

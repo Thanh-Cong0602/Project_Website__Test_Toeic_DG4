@@ -105,19 +105,19 @@ function ModalAllVocabularies(props) {
           <Input />
         </Form.Item>
         <Form.Item label="Word" name="word"
-          rules={[{ required: true, },]}>
+          rules={[{ required: true, message: 'Please input Word' },]}>
           <Input className='custom__input_modal' />
         </Form.Item>
         <Form.Item label="Pronounce" name="pronounce"
-          rules={[{ required: true, },]}>
+          rules={[{ required: true, message: 'Please input Pronounce' },]}>
           <Input className='custom__input_modal' />
         </Form.Item>
         <Form.Item label="Mean" name="mean"
-          rules={[{ required: true, },]}>
+          rules={[{ required: true, message: 'Please input Mean' },]}>
           <Input className='custom__input_modal' />
         </Form.Item>
         <Form.Item label="Category" name="categoryIds"
-          rules={[{ required: true, },]}>
+          rules={[{ required: true, message: 'Please choose Category of Vocabulary' },]}>
           <Select className='custom__input_modal'
             mode="multiple"
             allowClear

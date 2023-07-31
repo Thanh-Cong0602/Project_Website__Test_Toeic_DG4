@@ -3,14 +3,12 @@ import '../ModalCustom.css'
 import { createQuestion } from '../../../../Api/Service/vocabulary.service';
 import { updateQuestion } from '../../../../Api/Service/vocabulary.service';
 import { getAllVocabularies } from '../../../../Api/Service/vocabulary.service';
-import { Modal, Form, Input, Button, Row, Col, Radio } from 'antd';
+import { Modal, Form, Input, Button, Row, Col, Radio, Select } from 'antd';
 import { toast } from "react-toastify";
-import Select from 'react-select';
 
 function ModalQuestionVocabulary(props) {
-  const { isOpenForm, onClose, title, form, id, reloadData } = props;
+  const { isOpenForm, onClose, title, form, reloadData } = props;
   const [options, setOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
   useEffect(() => {
     getAllVocabularies('vocabularies').then((res) => {
       const _options = res.data.data.map((item) => ({
@@ -27,10 +25,11 @@ function ModalQuestionVocabulary(props) {
     onClose();
     form.resetFields();
   };
+
   const handleCreateVocabulary = (values) => {
     const requestBody = {
       id: values.id,
-      type: values.type,
+      type: 'vocabulary',
       objectTypeId: values.objectTypeId,
       level: values.level,
       textQuestion: values.textQuestion,
@@ -42,6 +41,7 @@ function ModalQuestionVocabulary(props) {
         correctAnswer: values.correctAnswer
       }
     }
+    console.log(requestBody)
     createQuestion('questions/create', requestBody).then((res) => {
       handleCancel()
       toast.success(res.data.message, { autoClose: 2000 })
@@ -54,7 +54,7 @@ function ModalQuestionVocabulary(props) {
   const handleUpdateVocabulary = (values) => {
     const requestBody = {
       id: values.id,
-      type: values.type,
+      type: 'vocabulary',
       objectTypeId: values.objectTypeId,
       level: values.level,
       textQuestion: values.textQuestion,
@@ -84,10 +84,7 @@ function ModalQuestionVocabulary(props) {
   };
 
   const onFinishFailed = () => {
-    toast.error("Create Vocabulary Category Failed", { autoClose: 1000 })
-  };
-  const handleChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
+    toast.error("Create Question for Vocabulary Failed", { autoClose: 1000 })
   };
 
   return (
@@ -120,25 +117,22 @@ function ModalQuestionVocabulary(props) {
         <Form.Item name="id" hidden="true">
           <Input />
         </Form.Item>
-        <Form.Item label="Type" name="type"
-          rules={[{ required: true, },]}>
-          <Input className='custom__input_modal' />
-        </Form.Item>
-        <Form.Item label="Object Type" name="objectTypeId"
-          rules={[{ required: true, },]}>
+        <Form.Item label="Question of Vocabulary" name="objectTypeId"
+          rules={[{ required: true, message: 'Please input Vocabulary' },]}>
           <Select className='custom__input_modal'
-            mode="single"
-            allowClear
-            placeholder="Please select Object Type"
+            showSearch
+            placeholder="Please Select Vocabulary"
+            optionFilterProp="children"
             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-            value={selectedOption}
-            onChange={handleChange}
+            defaultValue={form.getFieldValue('objectTypeId') ? form.getFieldValue('objectTypeId') : []}
             options={options}
-            isSearchable
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
           ></Select>
         </Form.Item>
         <Form.Item name="level" label="Level"
-          rules={[{ required: true, },]}>
+          rules={[{ required: true, message: 'Please choose Level' },]}>
           <Radio.Group>
             <Radio value="easy">Easy</Radio>
             <Radio value="medium">Medium</Radio>
@@ -146,39 +140,53 @@ function ModalQuestionVocabulary(props) {
           </Radio.Group>
         </Form.Item>
         <Form.Item label="Text Question" name="textQuestion"
-          rules={[{ required: true, },]}>
+          rules={[{ required: true, message: 'Please input Text Question' },]}>
           <Input className='custom__input_modal' />
         </Form.Item>
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Enter AnswerA" name="answerA"
-              rules={[{ required: true, },]}>
+            <Form.Item label="Answer A" name="answerA"
+              rules={[{ required: true, message: 'Please input answer A' },]}>
               <Input className='custom__input_modal' />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Enter AnswerB" name="answerB"
-              rules={[{ required: true, },]}>
+            <Form.Item label="Answer B" name="answerB"
+              rules={[{ required: true, message: 'Please input answer B' },]}>
               <Input className='custom__input_modal' />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Enter AnswerC" name="answerC"
-              rules={[{ required: true, },]}>
+            <Form.Item label="Answer C" name="answerC"
+              rules={[{ required: true, message: 'Please input answer C' },]}>
               <Input className='custom__input_modal' />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Enter AnswerD" name="answerD"
-              rules={[{ required: true, },]}>
+            <Form.Item label="Answer D" name="answerD"
+              rules={[{ required: true, message: 'Please input answer D' },]}>
               <Input className='custom__input_modal' />
             </Form.Item>
           </Col>
         </Row>
 
-        <Form.Item label="Enter Correct Answer" name="correctAnswer"
-          rules={[{ required: true, },]}>
+        <Form.Item label="Correct Answer" name="correctAnswer"
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: 'Please input Correct Answer!',
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || [getFieldValue('answerA'), getFieldValue('answerB'), getFieldValue('answerC'), getFieldValue('answerD')].includes(value)) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('Correct Answer must be one of four answer!'));
+              },
+            }),
+          ]}>
           <Input className='custom__input_modal' />
         </Form.Item>
       </Form>

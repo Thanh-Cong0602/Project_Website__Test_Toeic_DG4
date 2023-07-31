@@ -135,8 +135,16 @@ function Vocabularies() {
         }}
       />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilter: (value, record) => {
+      if (dataIndex === 'categoryNames') {
+        return record[dataIndex].some((categoryName) =>
+          categoryName.toLowerCase().includes(value.toLowerCase())
+        );
+      }
+      else {
+        return record[dataIndex].toString().toLowerCase().includes(value.toLowerCase());
+      }
+    },
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100);
@@ -205,6 +213,7 @@ function Vocabularies() {
       title: "Category",
       dataIndex: "categoryNames",
       key: "categoryNames",
+      ...getColumnSearchProps('categoryNames'),
       render: (categoryNames) => (
         <>
           {categoryNames.map((categoryName) => (
