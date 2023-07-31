@@ -19,7 +19,7 @@ function VocabularyByCaregory() {
     window.speechSynthesis.speak(value)
   }
   useEffect(() => {
-    getVocabularyByCategory(`vocabularies/getByCategoryId?categoryId=${currentCategory.categoryID}`).then((res => {
+    getVocabularyByCategory(`vocabularies/getVocabulariesByCategoryId?categoryId=${currentCategory.categoryID}`).then((res => {
       setVocabularyList(res.data.data)
     })).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
