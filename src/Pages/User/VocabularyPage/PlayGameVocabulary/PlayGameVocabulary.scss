@@ -56,6 +56,21 @@
       }
     }
 
+    & .countdown__time {
+      margin-top: 50px;
+      font-size: 50px;
+      height: auto;
+      width: 300px;
+      box-shadow: 1px 2px 2px aqua;
+      background: #aaa;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 0px;
+    }
+
     & .showAnswer {
       border-radius: 10px;
       box-shadow: 1px 2px 3px 2px #999;
@@ -83,6 +98,12 @@
           border-radius: 10px;
           cursor: pointer;
         }
+      }
+
+      & .elapsedTime {
+        padding-bottom: 10px;
+        font-weight: bold;
+        font-size: 16px;
       }
 
       & .result {
@@ -274,4 +295,49 @@
   span {
     color: red !important;
   }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.countdown-timer {
+  animation: pulse 1s infinite;
+  color: red;
+  font-weight: bold;
+}
+.loading__containe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px; 
+}
+
+.text_loading {
+  font-size: 20px;
+  font-weight: bold;
+}
+.loader {
+  border: 8px solid rgba(0, 0, 0, 0.3); 
+  border-top: 8px solid #3498db; 
+  margin: 0 auto;
+  margin-top: 50px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite; 
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

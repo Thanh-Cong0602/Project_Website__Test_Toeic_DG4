@@ -63,7 +63,9 @@
             width: 100%;
             border-bottom: 1px dashed #c7cfe0;
           }
-
+          & .test-result {
+            color: #91a3c8 !important;
+          }
           & .test-name {
             font-weight: 500;
             font-size: 20px;

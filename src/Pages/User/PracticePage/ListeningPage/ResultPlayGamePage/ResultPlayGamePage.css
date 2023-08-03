@@ -307,24 +307,56 @@
   cursor: pointer;
   margin: 10px;
 }
-.main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_correct_answer .answer_item .custom_circle {
-  background: red;
+.main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_correct_answer .answer_item .custom_circle_true {
+  background: rgb(130, 188, 36);
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 10px;
   height: 25px;
   width: 25px;
 }
+.main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_correct_answer .answer_item .custom_circle_false {
+  background: #ff5252;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 10px;
+  height: 25px;
+  width: 25px;
+}
+.main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_correct_answer .answer_item .custom_circle_none {
+  background: #fff;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #aaa;
+  height: 23px;
+  width: 23px;
+}
 .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_correct_answer .answer_item label {
   font-size: 20px;
   font-weight: 400;
   cursor: pointer;
   padding-bottom: 3px;
-  text-decoration: line-through;
 }
 .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_transcript_answer {
   text-align: left;
   padding: 10px;
+  font-weight: 400;
+  font-size: 18px;
+}
+.main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_transcript_answer .correct-answer {
+  color: rgb(130, 188, 36);
+}
+.main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_transcript_answer .incorrect-answer {
+  color: #ff5252;
+}
+
+.label__false {
+  text-decoration: line-through !important;
+}
+
+.label__none {
+  color: #aaa !important;
 }
 
 .btn-common-attributes, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .result-questions-listen .main-result-overview-data .main-statistics .main-statistics-button .btn-review-result, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .result-questions-listen .main-result-overview-data .main-statistics .main-statistics-button .btn-again-playgame {
@@ -367,7 +399,7 @@
   font-weight: 700;
 }
 
-.flex, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .result-questions-listen .main-result-overview-question-categories .categories-list, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .result-questions-listen .main-result-overview-question-categories .categories-list .category-item .category-item-circle, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_correct_answer .answer_item .custom_circle {
+.flex, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .result-questions-listen .main-result-overview-question-categories .categories-list, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .result-questions-listen .main-result-overview-question-categories .categories-list .category-item .category-item-circle, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_correct_answer .answer_item .custom_circle_true, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_correct_answer .answer_item .custom_circle_false, .main__result__playgame__listen .gird-playgame-listen .grid__playgame__right .main__show__answer .show_correct_answer .answer_item .custom_circle_none {
   display: flex;
   align-items: center;
   justify-content: center;

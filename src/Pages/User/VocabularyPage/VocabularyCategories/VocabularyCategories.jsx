@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import AOS from 'aos';
 import 'aos/dist/aos.css'
 AOS.init();
+
 const VocabularyCategories = () => {
   const [categories, setCategories] = useState([]);
   const dispatch = useDispatch()

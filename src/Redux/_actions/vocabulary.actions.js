@@ -13,6 +13,7 @@ function setCurrentCategory(category) {
 }
 
 function saveResultPlayGame(result) {
+  console.log(result)
    return {
       type: vocabularyConstants.SAVE_RESULT_PLAYGAME,
       payload: result

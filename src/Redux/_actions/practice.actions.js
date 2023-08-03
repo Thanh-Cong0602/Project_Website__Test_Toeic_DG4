@@ -1,12 +1,23 @@
 import { practiceConstants } from "../_constants";
 
 export const practiceActions = {
-  saveResultPlayGameListening
+  saveAnswerFromUser,
+  saveResultListeningByTest
 }
 
-function saveResultPlayGameListening(result) {
+function saveAnswerFromUser(result) {
   return {
-    type: practiceConstants.SAVE_RESULT_PLAYGAME_LISTENING,
+    type: practiceConstants.SAVE_ANSWER_FROM_USER,
     payload: result
+  }
+}
+
+function saveResultListeningByTest(indexTest, result) {
+  return {
+    type: practiceConstants.SAVE_RESULT_LISTENING_BY_TEST,
+    payload: {
+      indexTest,
+      result
+    }
   }
 }

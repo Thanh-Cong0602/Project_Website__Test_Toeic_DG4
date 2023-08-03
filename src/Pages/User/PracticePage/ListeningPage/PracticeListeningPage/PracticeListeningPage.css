@@ -57,6 +57,9 @@
   width: 100%;
   border-bottom: 1px dashed #c7cfe0;
 }
+.listen-practice-overview .main-practice-items .practice_test_items .practice_test_item .practice_box .test-result {
+  color: #91a3c8 !important;
+}
 .listen-practice-overview .main-practice-items .practice_test_items .practice_test_item .practice_box .test-name {
   font-weight: 500;
   font-size: 20px;

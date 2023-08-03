@@ -10,21 +10,40 @@ import 'aos/dist/aos.css'
 AOS.init();
 
 function VocabularyByCaregory() {
-  const [isShowPlayGame, setIsShowPlayGame] = useState(false)
-  const [vocabularyList, setVocabularyList] = useState([]);
   const currentCategory = useSelector(state => state.vocabulary.currentCategory)
   const resultfromPlayGame = useSelector(state => state.vocabulary.saveResultPlayGame)
-  const handleSpeakVocabulary = (word) => {
-    const value = new SpeechSynthesisUtterance(word)
-    window.speechSynthesis.speak(value)
-  }
+  const [deadline, setDeadline] = useState(0)
+  const [isShowPlayGame, setIsShowPlayGame] = useState(false);
+  const [vocabularyList, setVocabularyList] = useState([]);
+  const [vocabulariesID, setVocabulariesID] = useState([]);
   useEffect(() => {
     getVocabularyByCategory(`vocabularies/getVocabulariesByCategoryId?categoryId=${currentCategory.categoryID}`).then((res => {
+      const idList = res.data.data.map((item) => item.id);
+      setVocabulariesID(idList)
       setVocabularyList(res.data.data)
     })).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }, [])
+  }, []);
+
+  const findTopicIndexById = () => {
+    return resultfromPlayGame.findIndex((topic) =>
+      topic.categoryID === currentCategory.categoryID
+    )
+  };
+
+  const index = findTopicIndexById()
+
+  const handleSpeakVocabulary = (word) => {
+    const value = new SpeechSynthesisUtterance(word)
+    window.speechSynthesis.speak(value)
+  };
+
+
+  const handleShowPlayGame = () => {
+    setDeadline(Date.now() + 60000 * 0.5)
+    setIsShowPlayGame(true)
+  }
   return (
     <>
       {!isShowPlayGame ? (
@@ -36,16 +55,16 @@ function VocabularyByCaregory() {
               </div>
               <div className='showResult'>
                 <div className='result'>
-                  {!resultfromPlayGame ? (
+                  {index == -1 ? (
                     <>
-                      0/12
+                      0/{vocabularyList.length}
                       <div className=''>
                         Result
                       </div>
                     </>
                   ) : (
                     <>
-                      {resultfromPlayGame} / 12
+                      {resultfromPlayGame[index].correctAnswer} / {vocabularyList.length}
                       <div className=''>
                         Result
                       </div>
@@ -75,13 +94,16 @@ function VocabularyByCaregory() {
                 </div>
 
                 <input type='submit' className='btn-playGame' value={"Play game"}
-                  onClick={() => setIsShowPlayGame(true)} />
+                  onClick={handleShowPlayGame} />
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <PlayGameVocabulary setIsShowPlayGame={setIsShowPlayGame} />
+        <PlayGameVocabulary
+          setIsShowPlayGame={setIsShowPlayGame}
+          vocabulariesID={vocabulariesID}
+          deadline={deadline} />
       )}
     </>
   )

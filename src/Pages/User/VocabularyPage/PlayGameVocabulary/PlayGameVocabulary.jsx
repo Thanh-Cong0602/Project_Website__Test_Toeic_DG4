@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import './PlayGameVocabulary.css'
 import { getQuestionByCategory } from '../../../../Api/Service/vocabulary.service';
-import { getCorrectAnswer } from '../../../../Api/Service/vocabulary.service';
-import { userId } from '../../../../Api/userID';
 import ImageVocabulary from '../../../../Assets/vocabulary_image.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { vocabularyActions } from '../../../../Redux/_actions';
-import { CloseCircleTwoTone } from '@ant-design/icons';
+import { CloseCircleTwoTone, ClockCircleTwoTone } from '@ant-design/icons';
 import { toast } from "react-toastify";
+import Countdown from 'react-countdown';
 import AOS from 'aos';
 import 'aos/dist/aos.css'
 AOS.init();
 
-function PlayGameVocabulary({setIsShowPlayGame}) {
+function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
   const currentCategory = useSelector(state => state.vocabulary.currentCategory)
   const [isShowAnswer, setIsShowAnswer] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -20,19 +19,31 @@ function PlayGameVocabulary({setIsShowPlayGame}) {
   const [currentQuestion, setCurrentQuestion] = useState({});
   const [isLastQuestion, setIsLastQuestion] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
-  const [correctAnswer, setCorrectAnswer] = useState([])
   const [countCorrectAnswer, setCountCorrectAnswer] = useState(0);
-  const [isDataLoaded, setDataLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const dispatch = useDispatch()
+  const [timeStart, setTimeStart] = useState(null);
+
   useEffect(() => {
-    getQuestionByCategory('vocabularyQuestions').then((res) => {
-      const shuffledQuestions = shuffleArray(res.data.data)
+    getQuestionByCategory('questions/getByObjectTypeIds', vocabulariesID).then((res) => {
+      setIsDataLoaded(false)
+      const questionAPI = res.data.data
+      const shuffledQuestions = shuffleArray(questionAPI)
       setQuestions(shuffledQuestions);
-      for (let i = 0; i < res.data.data.length; i++) {
-        res.data.data[i].answers = shuffleArray(res.data.data[i].answers)
-      }
-      setCurrentQuestion(res.data.data[0])
-      setDataLoaded(true);
+      const answerKeys = ["answerA", "answerB", "answerC", "answerD"];
+      questionAPI.map((item) => {
+        const shuffledAnswerKeys = shuffleArray(answerKeys);
+        const shuffledOptionAnswers = {};
+        shuffledAnswerKeys.forEach((key) => {
+          shuffledOptionAnswers[key] = item.optionAnswers[key];
+        });
+        return {
+          ...item,
+          optionAnswers: shuffledOptionAnswers,
+        };
+      });
+      setCurrentQuestion(shuffledQuestions[0])
+      setIsDataLoaded(true);
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
@@ -49,7 +60,7 @@ function PlayGameVocabulary({setIsShowPlayGame}) {
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
-  }
+  };
 
   const handleAnswerChange = (e) => {
     const updatedAnswers = [...selectedAnswers];
@@ -66,41 +77,33 @@ function PlayGameVocabulary({setIsShowPlayGame}) {
       setCurrentQuestionIndex(currentQuestionIndex - 1)
     }
   }
+
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     }
   }
-
-  const checkAnswer = (selectedAnswers) => {
-    const body = {
-      "userId": userId,
-      "requestVocabularyAnswers": selectedAnswers
-    }
-    getCorrectAnswer('vocabularyQuestions/sendVocabularyAnswers', body).then((res) => {
-      setCorrectAnswer(res.data.data.vocabularyAnswers)
-      console.log(res.data.data.vocabularyAnswers)
-      let count = 0
-      const vocabularyAnswers = res.data.data.vocabularyAnswers
-      for (let i = 0; i < vocabularyAnswers.length; i++) {
-        if (vocabularyAnswers[i].isCorrect) {
-          count += 1
+  const handleSubmitAnswer = () => {
+    if (selectedAnswers.length === questions.length) {
+      const elapsedTime = 60000 * 0.5 - (deadline - Date.now());
+      let count = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if (questions[i].optionAnswers.correctAnswer === selectedAnswers[i].userAnswer) {
+          count += 1;
         }
       }
       setCountCorrectAnswer(count)
-      dispatch(vocabularyActions.saveResultPlayGame(count))
+      const resultData = {
+        categoryID: currentCategory.categoryID,
+        categoryName: currentCategory.categoryName,
+        correctAnswer: count,
+        countdown: elapsedTime
+      }
+      dispatch(vocabularyActions.saveResultPlayGame(resultData))
       setCurrentQuestionIndex(0)
       const messageSuccess = "You have completed all question!"
       toast.success(messageSuccess, { autoClose: 2000 })
       setIsShowAnswer(true)
-    }).catch((err) => {
-      toast.error(err.response.data.message, { autoClose: 2000 })
-    })
-  }
-
-  const handleSubmitAnswer = () => {
-    if (selectedAnswers.length === questions.length) {
-      checkAnswer(selectedAnswers)
     }
     else {
       const messageWarn = "You need to complete all questions!!!"
@@ -111,9 +114,34 @@ function PlayGameVocabulary({setIsShowPlayGame}) {
   const handleExitPlayGame = () => {
     setIsShowPlayGame(false)
   }
+
+  const autoSave = () => {
+    questions.map((item, index) => {
+      if (selectedAnswers[index] === undefined) {
+        selectedAnswers[index] = { questionId: item.id, userAnswer: "NULL" }
+      }
+    })
+    handleSubmitAnswer();
+  };
+
+  const convertTime = () => {
+    const elapsedTime = 60000 * 0.5 - (deadline - Date.now());
+    const minutes = Math.floor(elapsedTime / (1000 * 60));
+    const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+    return `${minutes} m ${seconds} s`
+  }
+
+  const renderer = ({ minutes, seconds }) => {
+    return (
+      <span className={`${seconds < 20 ? 'countdown-timer' : ''} `}>
+        {minutes < 10 ? '0' : ''}{minutes}:{seconds < 10 ? '0' : ''}{seconds}
+      </span>
+    );
+  };
+
   return (
     <>
-      {isDataLoaded && (
+      {isDataLoaded ? (
         <div className='main-study-vocabulary'>
           <div className='main-study-flex'>
             <div className='study-layout-left'>
@@ -135,17 +163,24 @@ function PlayGameVocabulary({setIsShowPlayGame}) {
                       ))}
                     </div>
                   </div>
+                  <div className='countdown__time'>
+                    <ClockCircleTwoTone />
+                    <Countdown date={deadline}
+                      onComplete={autoSave}
+                      renderer={renderer}
+                    />
+                  </div>
                 </>
               ) : (
                 <>
                   <div className='showAnswer'>
                     <div className='answer-items'>
                       {
-                        correctAnswer.map((item, index) => {
+                        questions.map((item, index) => {
                           return (
                             <div className={`answer-item
                                     ${currentQuestionIndex === index ? 'borderAnswer' : ''}
-                                    ${item.isCorrect ? 'answer-item-true' : 'answer-item-false'}`}
+                                    ${item.optionAnswers.correctAnswer === selectedAnswers[index].userAnswer ? 'answer-item-true' : 'answer-item-false'}`}
                               key={index}
                               onClick={() => handleQuestionClick(index)}>
                               <span className='num-question'>{index + 1}</span>
@@ -169,6 +204,9 @@ function PlayGameVocabulary({setIsShowPlayGame}) {
                           {questions.length - countCorrectAnswer}/{questions.length} Incorrect
                         </div>
                       </div>
+                    </div>
+                    <div className='elapsedTime'>
+                      ElapsedTime: {convertTime()}
                     </div>
                     <div className='completed-review'
                       onClick={() => {
@@ -199,56 +237,56 @@ function PlayGameVocabulary({setIsShowPlayGame}) {
                       currentQuestion &&
                       <div>
                         <div className='question'>
-                          Question {currentQuestionIndex + 1} : {currentQuestion.question}
+                          Question {currentQuestionIndex + 1} : {currentQuestion.textQuestion}
                         </div>
                         <div className='answer'>
                           <input type='radio' id="answerA" name="answer"
-                            value={currentQuestion.answers[0]}
-                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.answers[0]}
+                            value={currentQuestion.optionAnswers.answerA}
+                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerA}
                             onChange={handleAnswerChange}
                             className='custom-radio'
                           />
                           <label htmlFor='answerA'>
-                            A. {currentQuestion.answers[0]}
+                            A. {currentQuestion.optionAnswers.answerA}
                           </label>
                         </div>
                         <div className='answer'>
                           <input type='radio' id="answerB" name="answer"
-                            value={currentQuestion.answers[1]}
-                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.answers[1]}
+                            value={currentQuestion.optionAnswers.answerB}
+                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerB}
                             onChange={handleAnswerChange}
                             className='custom-radio'
                           />
                           <label htmlFor='answerB'>
-                            B. {currentQuestion.answers[1]}
+                            B. {currentQuestion.optionAnswers.answerB}
                           </label>
                         </div>
                         <div className='answer'>
                           <input type='radio' id="answerC" name="answer"
-                            value={currentQuestion.answers[2]}
-                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.answers[2]}
+                            value={currentQuestion.optionAnswers.answerC}
+                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerC}
                             onChange={handleAnswerChange}
                             className='custom-radio'
                           />
                           <label htmlFor='answerC'>
-                            C. {currentQuestion.answers[2]}
+                            C. {currentQuestion.optionAnswers.answerC}
                           </label>
                         </div>
                         <div className='answer'>
                           <input type='radio' id="answerD" name="answer"
-                            value={currentQuestion.answers[3]}
-                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.answers[3]}
+                            value={currentQuestion.optionAnswers.answerD}
+                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerD}
                             onChange={handleAnswerChange}
                             className='custom-radio'
                           />
                           <label htmlFor='answerD'>
-                            D. {currentQuestion.answers[3]}
+                            D. {currentQuestion.optionAnswers.answerD}
                           </label>
                         </div>
-                        {(correctAnswer.length > 0) ? (
+                        {(countCorrectAnswer > 0) ? (
                           <>
                             <div className='correctAnswer'>
-                              Correct answer is <span>{correctAnswer[currentQuestionIndex].correctAnswer}</span>
+                              Correct answer is <span>{questions[currentQuestionIndex].optionAnswers.correctAnswer}</span>
                             </div>
                           </>
                         ) : (
@@ -281,6 +319,11 @@ function PlayGameVocabulary({setIsShowPlayGame}) {
               </div>
             </div>
           </div>
+        </div>
+      ) : (
+        <div className="loading__container">
+          <div className="loader"></div>
+          <p className='text_loading'>Loading...</p>
         </div>
       )}
     </>

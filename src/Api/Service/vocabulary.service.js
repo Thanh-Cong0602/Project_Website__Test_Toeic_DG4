@@ -9,8 +9,8 @@ export function getVocabularyByCategory(endpoint) {
    return API.get(`${API_BASE.apiUrl}/${endpoint}`);
 }
 
-export function getQuestionByCategory(endpoint) {
-   return API.get(`${API_BASE.apiUrl}/${endpoint}`);
+export function getQuestionByCategory(endpoint, body) {
+   return API.post(`${API_BASE.apiUrl}/${endpoint}`, body);
 }
 
 export function getCorrectAnswer(endpoint, body) {

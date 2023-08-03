@@ -38,7 +38,7 @@ const User = () => {
         </>} />
         <Route path='/practice/listening' element={<MainListeningPage />} />
         <Route path='/practice/practicelistening' element={<PracticeListeningPage />} />
-        <Route path='/practice/playGameListening' element={<ResultPlayGamePage />} />
+        <Route path='/practice/playGameListening/:testIndex' element={<ResultPlayGamePage />} />
         <Route path='/practice/writing' element={<PracticePage />} />
         <Route path='/practice/speaking' element={<PracticePage />} />
         <Route path='/practice/reading' element={<PracticePage />} />

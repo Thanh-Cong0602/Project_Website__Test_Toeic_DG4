@@ -1,50 +1,55 @@
 import React, { useRef, useState, useEffect } from 'react'
 import './PlayGameListeningPage.css'
-import Picture_Part1 from '../../../../../Assets/image_part1.png'
+import { Image } from 'antd';
 import AudioTest from '../AudioFile'
 import { practiceActions } from '../../../../../Redux/_actions'
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css'
-import { useDispatch } from 'react-redux';
 AOS.init();
 
 function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) {
+  const { testIndex } = useParams();
   const [selectedAnswer, setSelectedAnswer] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isLastQuestion, setIsLastQuestion] = useState(false);
-  const correctAnswers = ["A", "B", "C", "D", "A", "B"]
   const dispatch = useDispatch()
+
   const handleAnswerChange = (answer) => {
     const updatedAnswer = [...selectedAnswer]
     updatedAnswer[currentQuestionIndex] = answer
     setSelectedAnswer(updatedAnswer);
   };
 
+  const isAnswerSelected = () => {
+    return selectedAnswer[currentQuestionIndex] !== null
+      && selectedAnswer[currentQuestionIndex] !== undefined;
+  };
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex < AudioTest.length - 1) {
+    if (currentQuestionIndex < AudioTest[testIndex].length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     }
-  }
-  const compareAnswers = () => {
-    let count = 0;
-    for (let i = 0; i < AudioTest.length; i++) {
-      if (selectedAnswer[i] == correctAnswers[i]) {
-        count += 1;
+  };
+
+  const handleSubmitAnswer = () => {
+    let countCorrect = 0;
+    for (let i = 0; i < AudioTest[testIndex].length; i++) {
+      if (selectedAnswer[i] === AudioTest[testIndex][i].optionAnswers.correctAnswer) {
+        countCorrect += 1;
       }
     }
-    dispatch(practiceActions.saveResultPlayGameListening(count))
+    dispatch(practiceActions.saveAnswerFromUser(selectedAnswer))
+    const result = { new: 0, correct: countCorrect, incorrect: 6 - countCorrect }
+    dispatch(practiceActions.saveResultListeningByTest(testIndex, result))
     setIsShowPlayGameListening(false)
     setIsShowResult(true)
     window.scrollTo({ top: 0 });
   };
 
-  const handleSubmitAnswer = () => {
-    compareAnswers();
-  };
-
   useEffect(() => {
-    setIsLastQuestion(currentQuestionIndex === AudioTest.length - 1);
+    setIsLastQuestion(currentQuestionIndex === AudioTest[testIndex].length - 1);
   }, [currentQuestionIndex])
 
   return (
@@ -52,15 +57,14 @@ function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) 
       <div className='gird-playgame-listen'>
         <div className='list-question-listen' data-aos="fade-up-right" data-aos-delay="400">
           <div className='title'>
-            Part 1
+            Part 1: Photos
           </div>
           <div className='showBtnQuestion'>
             <div className='allQuestions'>
-              {AudioTest.map((item, index) => (
+              {AudioTest[testIndex].map((item, index) => (
                 <div className={`btn-question
                 ${currentQuestionIndex === index ? 'currentQuestion' : ''}
-                ${selectedAnswer[index] ? 'selected' : ''}
-                `}
+                ${selectedAnswer[index] ? 'selected' : ''}   `}
                   key={index}>
                   <div className='num-question'>{index + 1}</div>
                 </div>
@@ -71,11 +75,14 @@ function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) 
 
         <div className='show-questions-listen' data-aos="fade-up-left" data-aos-delay="400">
           <audio controls key={Math.random()} className='audio__question'>
-            <source src={AudioTest[currentQuestionIndex].audioSrc}></source>
+            <source src={AudioTest[testIndex][currentQuestionIndex].audioSrc}></source>
           </audio>
           <div className='main-question'>
             <div className='question-image'>
-              <img src={Picture_Part1} />
+              <Image
+                width={400}
+                src={AudioTest[testIndex][currentQuestionIndex].imgSrc}
+              />
             </div>
             <div className='selected-answer'>
               <div className='answer-item' onClick={() => handleAnswerChange('A')}>
@@ -103,11 +110,15 @@ function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) 
             </div>
             {!isLastQuestion ? (
               <>
-                <button className='btn-common-attributes-pink' onClick={handleNextQuestion}>Next</button>
+                {isAnswerSelected() && (
+                  <button className='btn-common-attributes-pink' onClick={handleNextQuestion}>Next</button>
+                )}
               </>
             ) : (
               <>
-                <button className='btn-common-attributes-aqua' onClick={handleSubmitAnswer}>Submit</button>
+                {isAnswerSelected() && (
+                  <button className='btn-common-attributes-aqua' onClick={handleSubmitAnswer}>Submit</button>
+                )}
               </>
             )}
           </div>

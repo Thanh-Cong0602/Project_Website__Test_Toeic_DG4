@@ -366,12 +366,31 @@
             cursor: pointer;
             margin: 10px;
 
-            & .custom_circle {
-              background: red;
+            & .custom_circle_true {
+              background: rgb(130, 188, 36);
               object-fit: cover;
               border-radius: 10px;
               height: 25px;
               width: 25px;
+              @extend .flex;
+            }
+
+            & .custom_circle_false {
+              background: #ff5252;
+              object-fit: cover;
+              border-radius: 10px;
+              height: 25px;
+              width: 25px;
+              @extend .flex;
+            }
+
+            & .custom_circle_none {
+              background: #fff;
+              object-fit: cover;
+              border-radius: 10px;
+              border: 2px solid #aaa;
+              height: 23px;
+              width: 23px;
               @extend .flex;
             }
 
@@ -380,7 +399,6 @@
               font-weight: 400;
               cursor: pointer;
               padding-bottom: 3px;
-              text-decoration: line-through;
             }
           }
 
@@ -389,6 +407,17 @@
         & .show_transcript_answer {
           text-align: left;
           padding: 10px;
+          font-weight: 400;
+          font-size: 18px;
+
+          & .correct-answer {
+            color: rgb(130, 188, 36);
+            ;
+          }
+
+          & .incorrect-answer {
+            color: #ff5252;
+          }
         }
 
       }
@@ -397,6 +426,13 @@
   }
 }
 
+.label__false {
+  text-decoration: line-through !important;
+}
+
+.label__none {
+  color: #aaa !important;
+}
 
 .btn-common-attributes {
   display: inline-flex;
