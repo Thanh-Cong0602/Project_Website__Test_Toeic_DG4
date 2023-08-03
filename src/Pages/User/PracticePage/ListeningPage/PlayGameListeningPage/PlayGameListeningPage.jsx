@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, {useState, useEffect } from 'react'
 import './PlayGameListeningPage.css'
 import { Image } from 'antd';
 import AudioTest from '../AudioFile'
@@ -50,7 +50,7 @@ function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) 
 
   useEffect(() => {
     setIsLastQuestion(currentQuestionIndex === AudioTest[testIndex].length - 1);
-  }, [currentQuestionIndex])
+  }, [currentQuestionIndex, testIndex])
 
   return (
     <div className='main-playgame-listen'>

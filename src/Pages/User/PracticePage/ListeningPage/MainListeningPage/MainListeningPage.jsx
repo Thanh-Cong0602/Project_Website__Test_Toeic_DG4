@@ -34,7 +34,7 @@ function MainListeningPage() {
                 <Link to={"/practice/practicelistening"} onClick={handleClickToPractice}>
                   <div className='item-topic'>
                     <div className='item-image'>
-                      <img src={Image_Test} />
+                      <img src={Image_Test} alt='Test' />
                     </div>
                     <div>Part 1</div>
                   </div>
@@ -44,7 +44,7 @@ function MainListeningPage() {
                 <Link to={"/listenPractice"} onClick={handleClickToPractice}>
                   <div className='item-topic'>
                     <div className='item-image'>
-                      <img src={Image_Test} />
+                      <img src={Image_Test} alt='Test' />
                     </div>
                     <div>Part 1</div>
                   </div>
@@ -54,7 +54,7 @@ function MainListeningPage() {
                 <Link to={"/listenPractice"} onClick={handleClickToPractice}>
                   <div className='item-topic'>
                     <div className='item-image'>
-                      <img src={Image_Test} />
+                      <img src={Image_Test} alt='Test' />
                     </div>
                     <div>Part 1</div>
                   </div>
@@ -64,7 +64,7 @@ function MainListeningPage() {
                 <Link to={"/listenPractice"} onClick={handleClickToPractice}>
                   <div className='item-topic'>
                     <div className='item-image'>
-                      <img src={Image_Test} />
+                      <img src={Image_Test} alt='Test' />
                     </div>
                     <div>Part 1</div>
                   </div>
@@ -74,7 +74,7 @@ function MainListeningPage() {
                 <Link to={"/listenPractice"} onClick={handleClickToPractice}>
                   <div className='item-topic'>
                     <div className='item-image'>
-                      <img src={Image_Test} />
+                      <img src={Image_Test} alt='Test' />
                     </div>
                     <div>Part 1</div>
                   </div>
@@ -84,7 +84,7 @@ function MainListeningPage() {
                 <Link to={"/listenPractice"} onClick={handleClickToPractice}>
                   <div className='item-topic'>
                     <div className='item-image'>
-                      <img src={Image_Test} />
+                      <img src={Image_Test} alt='Test' />
                     </div>
                     <div>Part 1</div>
                   </div>
@@ -94,7 +94,7 @@ function MainListeningPage() {
                 <Link to={"/listenPractice"} onClick={handleClickToPractice}>
                   <div className='item-topic'>
                     <div className='item-image'>
-                      <img src={Image_Test} />
+                      <img src={Image_Test} alt='Test' />
                     </div>
                     <div>Part 1</div>
                   </div>

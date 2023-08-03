@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './PlayGameVocabulary.css'
 import { getQuestionByCategory } from '../../../../Api/Service/vocabulary.service';
 import ImageVocabulary from '../../../../Assets/vocabulary_image.png'
@@ -22,7 +22,6 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
   const [countCorrectAnswer, setCountCorrectAnswer] = useState(0);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const dispatch = useDispatch()
-  const [timeStart, setTimeStart] = useState(null);
 
   useEffect(() => {
     getQuestionByCategory('questions/getByObjectTypeIds', vocabulariesID).then((res) => {
@@ -47,7 +46,7 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }, [])
+  }, [vocabulariesID])
 
   useEffect(() => {
     setCurrentQuestion(questions[currentQuestionIndex])
@@ -86,17 +85,17 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
   const handleSubmitAnswer = () => {
     if (selectedAnswers.length === questions.length) {
       const elapsedTime = 60000 * 0.5 - (deadline - Date.now());
-      let count = 0;
-      for (let i = 0; i < questions.length; i++) {
-        if (questions[i].optionAnswers.correctAnswer === selectedAnswers[i].userAnswer) {
-          count += 1;
+      const countAnswer = questions.reduce((acc, question, index) => {
+        if (question.optionAnswers.correctAnswer === selectedAnswers[index].userAnswer) {
+          return acc + 1;
         }
-      }
-      setCountCorrectAnswer(count)
+        return acc;
+      }, 0);
+      setCountCorrectAnswer(countAnswer)
       const resultData = {
         categoryID: currentCategory.categoryID,
         categoryName: currentCategory.categoryName,
-        correctAnswer: count,
+        correctAnswer: countAnswer,
         countdown: elapsedTime
       }
       dispatch(vocabularyActions.saveResultPlayGame(resultData))
@@ -116,11 +115,14 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
   }
 
   const autoSave = () => {
-    questions.map((item, index) => {
+    const updatedSelectedAnswers = questions.map((item, index) => {
       if (selectedAnswers[index] === undefined) {
-        selectedAnswers[index] = { questionId: item.id, userAnswer: "NULL" }
+        return { questionId: item.id, userAnswer: "NULL" };
       }
-    })
+      return selectedAnswers[index];
+    });
+
+    setSelectedAnswers(updatedSelectedAnswers);
     handleSubmitAnswer();
   };
 

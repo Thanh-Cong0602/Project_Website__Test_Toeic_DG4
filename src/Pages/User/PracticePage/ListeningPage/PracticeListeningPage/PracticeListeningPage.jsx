@@ -49,7 +49,7 @@ function PracticeListeningPage() {
                   className='practice_test_item'>
                   <Link to={`/practice/playGameListening/${testIndex}`} key={testIndex}>
                     <div className='practice_box'>
-                      <div className={`test-progress ${resultfromPlayGame[testIndex].new == 0 ? 'test-result' : ''}`}>
+                      <div className={`test-progress ${resultfromPlayGame[testIndex].new === 0 ? 'test-result' : ''}`}>
                         {Math.round((resultfromPlayGame[testIndex].correct / 6) * 100)} %
                       </div>
                       <div className='test-name'>

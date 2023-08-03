@@ -24,7 +24,7 @@ function VocabularyByCaregory() {
     })).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }, []);
+  }, [currentCategory.categoryID]);
 
   const findTopicIndexById = () => {
     return resultfromPlayGame.findIndex((topic) =>
@@ -55,7 +55,7 @@ function VocabularyByCaregory() {
               </div>
               <div className='showResult'>
                 <div className='result'>
-                  {index == -1 ? (
+                  {index === -1 ? (
                     <>
                       0/{vocabularyList.length}
                       <div className=''>

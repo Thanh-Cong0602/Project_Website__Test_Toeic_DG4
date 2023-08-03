@@ -50,7 +50,7 @@ import Image_04_Test4 from '../../../../Assets/Test4_Img_04.png'
 import Image_05_Test4 from '../../../../Assets/Test4_Img_05.png'
 import Image_06_Test4 from '../../../../Assets/Test4_Img_06.png'
 
-export default [
+const AudioTest =  [
   [{
     title: "Test1_01",
     audioSrc: audio_01_Test1,
@@ -781,3 +781,5 @@ export default [
     }
   }],
 ]
+
+export default AudioTest

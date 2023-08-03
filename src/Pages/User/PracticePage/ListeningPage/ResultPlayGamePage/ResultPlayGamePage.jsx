@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './ResultPlayGamePage.css'
 import { Bezier2 } from 'react-bootstrap-icons'
 import PlayGameListeningPage from '../PlayGameListeningPage/PlayGameListeningPage'
-import Picture_Part1 from '../../../../../Assets/image_part1.png'
 import AudioTest from '../AudioFile'
 import { Progress, Space, Image } from 'antd';
 import { useSelector } from 'react-redux'
