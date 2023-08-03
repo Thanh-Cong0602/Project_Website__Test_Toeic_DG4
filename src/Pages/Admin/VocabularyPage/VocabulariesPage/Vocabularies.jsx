@@ -182,7 +182,7 @@ function Vocabularies() {
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }, [isOpenForm])
+  }, [categoryMap])
 
   const columns = [
     {

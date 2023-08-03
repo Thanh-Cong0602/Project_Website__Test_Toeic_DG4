@@ -11,7 +11,7 @@ function ModalAllVocabularies(props) {
   const [options, setOptions] = useState([]);
   useEffect(() => {
     setStatus(form.getFieldValue("isActive"))
-  }, []);
+  }, [form]);
 
   const getAllCategories = () => {
     getVocabularyCategories('vocabularyCategories').then((res) => {
@@ -64,11 +64,7 @@ function ModalAllVocabularies(props) {
   };
 
   const onFinish = (values) => {
-    {
-      values.id
-        ? handleUpdateVocabulary(values)
-        : handleCreateVocabulary(values)
-    }
+    values.id ? handleUpdateVocabulary(values) : handleCreateVocabulary(values)
   };
 
   const onFinishFailed = () => {

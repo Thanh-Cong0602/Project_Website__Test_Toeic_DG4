@@ -6,7 +6,7 @@ function Banner() {
     <>
       <div className='banner'>
         <div className='bannerEnglish'>
-          <img src={BannerEnglist} />
+          <img src={BannerEnglist} alt='Banner'/>
         </div>
       </div>
     </>

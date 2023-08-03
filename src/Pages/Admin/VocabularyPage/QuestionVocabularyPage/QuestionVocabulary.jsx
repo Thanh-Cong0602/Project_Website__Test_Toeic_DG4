@@ -3,7 +3,7 @@ import ModalQuestionVocabulary from './ModalQuestionVocabulary';
 import HeaderPage from '../HeaderPage/HeaderPage';
 import { getAllQuestionVocabulary } from '../../../../Api/Service/vocabulary.service'
 import { deleteQuestion } from '../../../../Api/Service/vocabulary.service';
-import { Checkbox, Table, Space, Tag, Form, Modal, Input, Button } from 'antd';
+import { Table, Space, Tag, Form, Modal, Input, Button } from 'antd';
 import { SearchOutlined, ExclamationCircleOutlined, EditTwoTone, DeleteTwoTone } from '@ant-design/icons';
 import { toast } from "react-toastify";
 import Highlighter from 'react-highlight-words'
@@ -165,7 +165,7 @@ function QuestionVocabulary() {
       ...getColumnSearchProps('level'),
     },
     {
-      title: "TextQuestion",
+      title: "Text Question",
       dataIndex: "textQuestion",
       key: "textQuestion",
       width: '30%',
@@ -177,10 +177,10 @@ function QuestionVocabulary() {
       key: "optionAnswers",
       render: (text) => (
         <>
-          <div><a>A. {text.answerA}</a></div>
-          <div><a>B. {text.answerB}</a></div>
-          <div><a>C. {text.answerC}</a></div>
-          <div><a>D. {text.answerD}</a></div>
+          <div>A. {text.answerA}</div>
+          <div>B. {text.answerB}</div>
+          <div>C. {text.answerC}</div>
+          <div>D. {text.answerD}</div>
         </>),
     },
     {
@@ -188,7 +188,7 @@ function QuestionVocabulary() {
       dataIndex: "optionAnswers",
       key: "optionAnswers",
       ...getColumnSearchProps('optionAnswers'),
-      render: (text) => <a>{text.correctAnswer}</a>,
+      render: (text) => <div>{text.correctAnswer}</div>,
     },
     {
       title: "Action",
@@ -274,7 +274,7 @@ function QuestionVocabulary() {
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }, [isOpenForm])
+  }, [])
   return (
     <>
       <HeaderPage

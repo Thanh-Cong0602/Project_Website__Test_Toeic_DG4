@@ -3,7 +3,7 @@ import Logo from '../../../Assets/vo_dien.jpg'
 import './Navbar.css'
 import { MenuFoldOutlined, MenuUnfoldOutlined, PoweroffOutlined,  BellFilled} from '@ant-design/icons';
 import { Layout, Button } from 'antd';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { userActions } from '../../../Redux/_actions'
 import { logoutAPI } from '../../../Api/Service/auth.service';
 import { toast } from 'react-toastify';
@@ -17,7 +17,6 @@ function Navbar({ collapsed, setCollapsed }) {
       toast.success(res.data.message, { autoClose: 2000 })
     })
   }
-  // const username = useSelector(state => state.authentication.dataUser.username);
   return (
     <Header className='header__admin' >
         <Button

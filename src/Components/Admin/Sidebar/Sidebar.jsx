@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Sidebar.css'
 import { UserOutlined, ReadOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import { Headphones, PencilSquare, Headset, Journal } from 'react-bootstrap-icons';

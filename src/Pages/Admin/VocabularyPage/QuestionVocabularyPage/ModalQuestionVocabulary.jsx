@@ -76,11 +76,7 @@ function ModalQuestionVocabulary(props) {
   }
 
   const onFinish = (values) => {
-    {
-      values.id
-        ? handleUpdateVocabulary(values)
-        : handleCreateVocabulary(values)
-    }
+    values.id ? handleUpdateVocabulary(values) : handleCreateVocabulary(values)
   };
 
   const onFinishFailed = () => {

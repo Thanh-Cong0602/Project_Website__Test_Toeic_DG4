@@ -145,7 +145,6 @@ function ManageAccount() {
       title: "Username",
       dataIndex: "username",
       key: "username",
-      render: (text) => <a>{text}</a>,
       ...getColumnSearchProps('username'),
     },
     {

@@ -11,7 +11,7 @@ function ModalVocabulary(props) {
 
   useEffect(() => {
     setStatus(form.getFieldValue("isActive"))
-  }, [])
+  }, [form])
 
   const handleChange = (e) => {
     setStatus(e.target.checked);
@@ -45,11 +45,9 @@ function ModalVocabulary(props) {
   };
 
   const onFinish = (values) => {
-    {
-      values.id
-        ? handleUpdateVocabulary(values)
-        : handleCreateVocabulary(values)
-    }
+    values.id
+      ? handleUpdateVocabulary(values)
+      : handleCreateVocabulary(values)
   };
 
   const onFinishFailed = () => {
