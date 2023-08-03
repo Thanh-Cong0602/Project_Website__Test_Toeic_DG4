@@ -55,7 +55,7 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID }) {
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }, [vocabulariesID, timeStart])
+  }, [vocabulariesID])
 
   useEffect(() => {
     setCurrentQuestion(questions[currentQuestionIndex])
