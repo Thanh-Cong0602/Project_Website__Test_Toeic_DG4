@@ -9,7 +9,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css'
 AOS.init();
 
-function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) {
+function PlayGameListeningPage({ setIsShowPlayGameListening}) {
   const { testIndex } = useParams();
   const [selectedAnswer, setSelectedAnswer] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -44,7 +44,6 @@ function PlayGameListeningPage({ setIsShowPlayGameListening, setIsShowResult }) 
     const result = { new: 0, correct: countCorrect, incorrect: 6 - countCorrect }
     dispatch(practiceActions.saveResultListeningByTest(testIndex, result))
     setIsShowPlayGameListening(false)
-    setIsShowResult(true)
     window.scrollTo({ top: 0 });
   };
 

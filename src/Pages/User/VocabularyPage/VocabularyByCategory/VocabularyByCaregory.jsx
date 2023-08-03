@@ -12,7 +12,6 @@ AOS.init();
 function VocabularyByCaregory() {
   const currentCategory = useSelector(state => state.vocabulary.currentCategory)
   const resultfromPlayGame = useSelector(state => state.vocabulary.saveResultPlayGame)
-  const [deadline, setDeadline] = useState(0)
   const [isShowPlayGame, setIsShowPlayGame] = useState(false);
   const [vocabularyList, setVocabularyList] = useState([]);
   const [vocabulariesID, setVocabulariesID] = useState([]);
@@ -41,7 +40,6 @@ function VocabularyByCaregory() {
 
 
   const handleShowPlayGame = () => {
-    setDeadline(Date.now() + 60000 * 0.5)
     setIsShowPlayGame(true)
   }
   return (
@@ -102,8 +100,7 @@ function VocabularyByCaregory() {
       ) : (
         <PlayGameVocabulary
           setIsShowPlayGame={setIsShowPlayGame}
-          vocabulariesID={vocabulariesID}
-          deadline={deadline} />
+          vocabulariesID={vocabulariesID} />
       )}
     </>
   )

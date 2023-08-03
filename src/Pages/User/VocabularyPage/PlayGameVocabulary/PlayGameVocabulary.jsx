@@ -5,13 +5,14 @@ import ImageVocabulary from '../../../../Assets/vocabulary_image.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { vocabularyActions } from '../../../../Redux/_actions';
 import { CloseCircleTwoTone, ClockCircleTwoTone } from '@ant-design/icons';
+import { Modal } from 'antd';
 import { toast } from "react-toastify";
 import Countdown from 'react-countdown';
 import AOS from 'aos';
 import 'aos/dist/aos.css'
 AOS.init();
 
-function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
+function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID }) {
   const currentCategory = useSelector(state => state.vocabulary.currentCategory)
   const [isShowAnswer, setIsShowAnswer] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -21,9 +22,15 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [countCorrectAnswer, setCountCorrectAnswer] = useState(0);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [isQuestionCompleted, setIsQuestionCompleted] = useState([]);
+  const [timeStart, setTimeStart] = useState(0)
+  const [timeDelay, setTimeDelay] = useState(0)
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch()
 
   useEffect(() => {
+    const startTime = Date.now()
+    setTimeStart(startTime)
     getQuestionByCategory('questions/getByObjectTypeIds', vocabulariesID).then((res) => {
       setIsDataLoaded(false)
       const questionAPI = res.data.data
@@ -43,10 +50,12 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
       });
       setCurrentQuestion(shuffledQuestions[0])
       setIsDataLoaded(true);
+      setIsQuestionCompleted(new Array(questionAPI.length).fill(false));
+      setTimeDelay(Date.now() - startTime)
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
-  }, [vocabulariesID])
+  }, [vocabulariesID, timeStart])
 
   useEffect(() => {
     setCurrentQuestion(questions[currentQuestionIndex])
@@ -65,26 +74,28 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
     const updatedAnswers = [...selectedAnswers];
     updatedAnswers[currentQuestionIndex] = { questionId: currentQuestion.id, userAnswer: e.target.value };
     setSelectedAnswers(updatedAnswers);
+    isQuestionCompleted[currentQuestionIndex] = true
   };
 
   const handleQuestionClick = (questionIndex) => {
     setCurrentQuestionIndex(questionIndex)
-  }
+  };
 
   const handlePrevQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1)
     }
-  }
+  };
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     }
-  }
+  };
+
   const handleSubmitAnswer = () => {
-    if (selectedAnswers.length === questions.length) {
-      const elapsedTime = 60000 * 0.5 - (deadline - Date.now());
+    if (isQuestionCompleted.every((completed) => completed)) {
+      const elapsedTime = Date.now() - timeStart - timeDelay;
       const countAnswer = questions.reduce((acc, question, index) => {
         if (question.optionAnswers.correctAnswer === selectedAnswers[index].userAnswer) {
           return acc + 1;
@@ -110,24 +121,27 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
     }
   };
 
-  const handleExitPlayGame = () => {
+  const handleModalCancel = () => {
+    setIsModalOpen(false)
+  };
+
+  const handleModalOk = () => {
+    setIsModalOpen(false)
     setIsShowPlayGame(false)
-  }
+  };
 
   const autoSave = () => {
-    const updatedSelectedAnswers = questions.map((item, index) => {
-      if (selectedAnswers[index] === undefined) {
-        return { questionId: item.id, userAnswer: "NULL" };
+    for (let i = 0; i < questions.length; i++) {
+      if (selectedAnswers[i] === undefined) {
+        selectedAnswers[i] = { questionId: questions[i].id, userAnswer: "NULL" }
+        isQuestionCompleted[i] = true
       }
-      return selectedAnswers[index];
-    });
-
-    setSelectedAnswers(updatedSelectedAnswers);
+    }
     handleSubmitAnswer();
   };
 
   const convertTime = () => {
-    const elapsedTime = 60000 * 0.5 - (deadline - Date.now());
+    const elapsedTime = Date.now() - timeStart - timeDelay;
     const minutes = Math.floor(elapsedTime / (1000 * 60));
     const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
     return `${minutes} m ${seconds} s`
@@ -167,7 +181,7 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
                   </div>
                   <div className='countdown__time'>
                     <ClockCircleTwoTone />
-                    <Countdown date={deadline}
+                    <Countdown date={timeStart + timeDelay + 60000 * 0.5}
                       onComplete={autoSave}
                       renderer={renderer}
                     />
@@ -228,7 +242,7 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
                   <></>
                 ) : (
                   <>
-                    <div className='exitPlayGame' onClick={handleExitPlayGame}>
+                    <div className='exitPlayGame' onClick={() => setIsModalOpen(true)}>
                       <CloseCircleTwoTone />
                     </div>
                   </>
@@ -328,6 +342,11 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID, deadline }) {
           <p className='text_loading'>Loading...</p>
         </div>
       )}
+      <Modal title="Are you sure exit PlayGame Vocabulary ?"
+        open={isModalOpen}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}>
+      </Modal>
     </>
   )
 }

@@ -14,7 +14,6 @@ AOS.init();
 function ResultPlayGamePage() {
   const { testIndex } = useParams();
   const [isShowPlayGameListening, setIsShowPlayGameListening] = useState(false)
-  const [isShowResult, setIsShowResult] = useState(false)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const resultfromPlayGame = useSelector(state => state.practice.saveResultListeningByTest)
   const answerFromUser = useSelector(state => state.practice.saveAnswerFromUser)
@@ -376,7 +375,7 @@ function ResultPlayGamePage() {
           </div>
         </>) :
         (
-          <PlayGameListeningPage setIsShowPlayGameListening={setIsShowPlayGameListening} setIsShowResult={setIsShowResult} />
+          <PlayGameListeningPage setIsShowPlayGameListening={setIsShowPlayGameListening}  />
         )}
     </>
   )
