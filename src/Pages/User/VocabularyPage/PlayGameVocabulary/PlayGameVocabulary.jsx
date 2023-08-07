@@ -29,6 +29,7 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID }) {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    
     const startTime = Date.now()
     setTimeStart(startTime)
     getQuestionByCategory('questions/getByObjectTypeIds', vocabulariesID).then((res) => {
@@ -158,7 +159,7 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID }) {
   return (
     <>
       {isDataLoaded ? (
-        <div className='main-study-vocabulary'>
+        <div className='main-study-vocabulary' id="playGameSection">
           <div className='main-study-flex'>
             <div className='study-layout-left'>
               <div className='title'>

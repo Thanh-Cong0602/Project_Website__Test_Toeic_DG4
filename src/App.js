@@ -16,7 +16,7 @@ function App() {
     if (!isLoggedIn || isLoggedIn === null) {
       navigate("/login");
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn]);
   return (
     <div className="App" >
       <Routes>  
