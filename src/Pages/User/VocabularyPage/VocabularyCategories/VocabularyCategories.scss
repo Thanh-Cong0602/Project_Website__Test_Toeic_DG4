@@ -1,0 +1,28 @@
+.vocabulary-categories {
+   & .main-list-view {
+      max-width: 1000px;
+      margin: 0 auto;
+
+      & .item {
+         border-radius: 15px;
+         padding: 10px;
+         box-shadow: 1px 2px 3px 2px #999;
+         display: flex;
+         text-align: left;
+         gap: 10px;
+         max-width:250px;
+         font-size: 15px;
+         & .item-name {
+            color: black;
+         }
+      }
+
+      & .item:hover {
+        box-shadow:  1px 2px 3px 2px rgb(35, 202, 239);
+        color: rgb(255, 148, 140) !important;
+        & .item-name {
+          color: rgb(255, 148, 140) !important;
+       }
+      }
+   }
+}

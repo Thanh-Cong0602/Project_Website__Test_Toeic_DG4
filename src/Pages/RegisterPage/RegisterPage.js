@@ -131,7 +131,7 @@ function RegisterPage() {
               </div>
               <div>
                 <input type='radio' name="role" value="admin"
-                  checked={user.role === "admin"} onChange={handleChange} required />
+                  checked={user.role === "admin"} onChange={handleChange} />
                 <label>Admin</label>
               </div>
             </div>
@@ -143,7 +143,7 @@ function RegisterPage() {
                   style={{ color: formErrors.surname ? 'red' : '' }} />}
                 name='surname'
                 onChange={handleChange}
-                required
+                
               />
               {formErrors.surname && <div className='error-message'>{formErrors.surname}</div>}
             </div>
@@ -156,7 +156,7 @@ function RegisterPage() {
                   style={{ color: formErrors.name ? 'red' : '' }} />}
                 name='name'
                 onChange={handleChange}
-                required
+                
               />
               {formErrors.name && <div className='error-message'>{formErrors.name}</div>}
             </div>
@@ -169,7 +169,7 @@ function RegisterPage() {
                   style={{ color: formErrors.email ? 'red' : '' }} />}
                 name='email'
                 onChange={handleChange}
-                required
+                
               />
               {formErrors.email && <div className='error-message'>{formErrors.email}</div>}
             </div>

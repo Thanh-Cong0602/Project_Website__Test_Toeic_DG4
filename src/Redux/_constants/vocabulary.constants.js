@@ -1,0 +1,4 @@
+export const vocabularyConstants = {
+   SET_CURRENT_CATEGORY: 'SET_CURRENT_CATEGORY',
+   SAVE_RESULT_PLAYGAME: 'SAVE_RESULT_PLAYGAME'
+}

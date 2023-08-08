@@ -1,0 +1,134 @@
+.main-playgame-listen {
+  padding: 0 24px;
+  background: #f2f3f7;
+}
+.main-playgame-listen .gird-playgame-listen {
+  display: grid;
+  grid-template-columns: 335px auto;
+  margin-top: 20px;
+}
+.main-playgame-listen .gird-playgame-listen .list-question-listen .title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 45px;
+  color: #1d1d1d;
+}
+.main-playgame-listen .gird-playgame-listen .list-question-listen .showBtnQuestion {
+  border-radius: 10px;
+  box-shadow: 1px 2px 3px 2px #999;
+  height: 300px;
+  width: 300px;
+  background: white;
+  margin-top: 50px;
+}
+.main-playgame-listen .gird-playgame-listen .list-question-listen .showBtnQuestion .allQuestions {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-flow: dense;
+  place-items: center;
+  row-gap: 20px;
+}
+.main-playgame-listen .gird-playgame-listen .list-question-listen .showBtnQuestion .allQuestions .btn-question {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background: #f2f3f7;
+  cursor: pointer;
+}
+.main-playgame-listen .gird-playgame-listen .list-question-listen .showBtnQuestion .allQuestions .btn-question .num-question {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+.main-playgame-listen .gird-playgame-listen .list-question-listen .showBtnQuestion .allQuestions .btn-question:hover {
+  background: #b1afaf;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  transition: background 2s;
+  z-index: 1;
+  box-sizing: border-box;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen {
+  border-radius: 15px;
+  width: 100%;
+  height: auto;
+  background: white;
+  margin: 30px 0px;
+  padding-bottom: 50px;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .audio__question {
+  padding: 30px;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .main-question .question-image {
+  padding-top: 10px;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .main-question .selected-answer {
+  margin: 30px;
+  cursor: pointer !important;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .main-question .selected-answer .answer-item {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  gap: 10px;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .main-question .selected-answer .answer-item .custom-radio {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .main-question .selected-answer .answer-item label {
+  font-size: 20px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .main-question .selected-answer .answer-item:hover {
+  background: #f2f3f7;
+  border-radius: 10px;
+  box-shadow: 2px 1px 1px aqua;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .main-question .btn-common-attributes-pink {
+  width: 130px !important;
+}
+.main-playgame-listen .gird-playgame-listen .show-questions-listen .main-question .btn-common-attributes-aqua {
+  width: 130px !important;
+}
+
+.currentQuestion {
+  border: 2px solid #007aff !important;
+}
+
+.btn-audio {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #fff;
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 8px 24px hsla(210, 8%, 62%, 0.2);
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.btn-audio .icon {
+  font-size: 20px;
+}
+
+.flex, .btn-audio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-slider-track {
+  background-color: black !important;
+}
+
+.selected {
+  background: #999 !important;
+}/*# sourceMappingURL=PlayGameListeningPage.css.map */

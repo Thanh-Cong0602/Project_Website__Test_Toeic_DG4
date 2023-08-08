@@ -18,8 +18,8 @@ function App() {
     }
   }, [isLoggedIn, navigate]);
   return (
-    <div>
-      <Routes>
+    <div className="App" >
+      <Routes>  
         <Route path="/login" exact element={<LoginPage />} />
       </Routes>
       <Routes>
