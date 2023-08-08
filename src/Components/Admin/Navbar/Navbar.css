@@ -1,0 +1,48 @@
+.header__admin {
+  padding: 20px;
+  background: aqua;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+.header__admin .header__left .button__scroll {
+  font-size: 20px;
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+}
+.header__admin .header__left .search_item {
+  margin: 15px;
+  position: relative;
+  padding: 10px 15px 10px 35px;
+  font-size: 16px;
+  border-radius: 50px;
+  border-style: none;
+  border: none;
+  outline: none;
+  color: #656a6e;
+  width: 300px;
+  box-shadow: 1px 2px 2px 0px rgba(17, 18, 19, 0.35);
+  transition: 0.25s ease;
+}
+.header__admin .header__left .search_item:focus {
+  padding: 10px 100px 10px 35px;
+  box-shadow: 4px 4px 10px 1px rgba(17, 18, 19, 0.35);
+}
+.header__admin .header__left .search_item-icon {
+  color: #656a6e;
+  position: absolute;
+  font-size: 18px;
+  left: 170px;
+}
+.header__admin .header__right {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+}
+.header__admin .header__right img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}/*# sourceMappingURL=Navbar.css.map */

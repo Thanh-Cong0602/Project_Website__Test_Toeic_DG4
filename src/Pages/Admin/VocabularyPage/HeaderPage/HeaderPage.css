@@ -1,0 +1,8 @@
+.header__page {
+  padding: 0px 20px;
+}
+.header__page .btn__create {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}/*# sourceMappingURL=HeaderPage.css.map */
