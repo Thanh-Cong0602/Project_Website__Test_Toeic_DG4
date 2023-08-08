@@ -41,7 +41,6 @@ function ModalQuestionVocabulary(props) {
         correctAnswer: values.correctAnswer
       }
     }
-    console.log(requestBody)
     createQuestion('questions/create', requestBody).then((res) => {
       handleCancel()
       toast.success(res.data.message, { autoClose: 2000 })

@@ -57,7 +57,4 @@ export function getQuestionByCategory(endpoint, body) {
    return API.post(`${API_BASE.apiUrl}/${endpoint}`, body);
 }
 
-export function getCorrectAnswer(endpoint, body) {
-   return API.post(`${API_BASE.apiUrl}/${endpoint}`, body);
-}
 

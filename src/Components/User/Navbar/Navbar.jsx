@@ -28,9 +28,9 @@ function Navbar() {
     <div className='navbar'>
       <Row>
         <Col span={6} className='navbar_left'>
-          <div className={`logo ${currentPage === 'homepage' ? 'page-active' : ''}`}>
+          <div className={`logoUser ${currentPage === 'homepage' ? 'page-active' : ''}`}>
             <Link to={"/homepage"} onClick={() => handleClickPage('homepage')}>
-              <img src={Logo} alt='Logo Website' />
+              <img src={Logo} alt='Logo Website' className='logo__website'/>
             </Link>
           </div>
           <div className='search-bar'>

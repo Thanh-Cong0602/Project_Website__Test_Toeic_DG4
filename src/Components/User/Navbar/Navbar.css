@@ -10,10 +10,10 @@
   align-items: center;
   gap: 15px;
 }
-.navbar .navbar_left .logo {
+.navbar .navbar_left .logoUser {
   padding: 10px;
 }
-.navbar .navbar_left .logo img {
+.navbar .navbar_left .logoUser .logo__website {
   border-radius: 50%;
   height: 80px;
   width: 80px;

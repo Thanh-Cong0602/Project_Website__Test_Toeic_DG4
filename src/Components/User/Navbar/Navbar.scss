@@ -9,10 +9,10 @@
     align-items: center;
     gap: 15px;
 
-    & .logo {
+    & .logoUser {
       padding: 10px;
 
-      img {
+      & .logo__website {
         border-radius: 50%;
         height: 80px;
         width: 80px;

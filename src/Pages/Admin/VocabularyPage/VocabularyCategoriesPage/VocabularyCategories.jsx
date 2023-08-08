@@ -17,7 +17,7 @@ function VocabularyCategories() {
   useEffect(() => {
     setIsLoading(true)
     getVocabularyCategories('vocabularyCategories').then((res) => {
-      const addSttToCategories = res.data.data.map((item, index) => ({
+      const addSttToCategories = res.data.data.reverse().map((item, index) => ({
         ...item,
         num: index + 1,
       }
@@ -217,11 +217,11 @@ function VocabularyCategories() {
   const reloadData = useCallback(() => {
     setIsLoading(true)
     getVocabularyCategories('vocabularyCategories').then((res) => {
-      const addSttToCategories = res.data.data.map((item, index) => ({
+      const addSttToCategories = res.data.data.reverse().map((item, index) => ({
         ...item,
         num: index + 1,
       }))
-      setCategories(addSttToCategories)
+      setCategories(addSttToCategories);
       setIsLoading(false)
     }).catch((err) => {
       toast.error(err.response.data.message, { autoClose: 2000 })

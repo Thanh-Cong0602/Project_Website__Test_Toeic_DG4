@@ -18,7 +18,7 @@ function QuestionVocabulary() {
   useEffect(() => {
     setIsLoading(true)
     getAllQuestionVocabulary('questions?type=vocabulary').then((res) => {
-      const addSttToQuestions = res.data.data.map((item, index) => ({
+      const addSttToQuestions = res.data.data.reverse().map((item, index) => ({
         ...item,
         num: index + 1,
       }
@@ -264,7 +264,7 @@ function QuestionVocabulary() {
   const reloadData = useCallback(() => {
     setIsLoading(true)
     getAllQuestionVocabulary('questions?type=vocabulary').then((res) => {
-      const addSttToQuestions = res.data.data.map((item, index) => ({
+      const addSttToQuestions = res.data.data.reverse().map((item, index) => ({
         ...item,
         num: index + 1,
       }

@@ -30,7 +30,7 @@ function Vocabularies() {
       return getAllVocabularies('vocabularies');
 
     }).then((resVocabularies) => {
-      const vocabulariesWithCategory = resVocabularies.data.data.map((item, index) => {
+      const vocabulariesWithCategory = resVocabularies.data.data.reverse().map((item, index) => {
         const categoryNames = item.categoryIds.map((categoryId) => tempCategoryMap[categoryId]);
         return {
           ...item,
@@ -169,7 +169,7 @@ function Vocabularies() {
   const reloadData = useCallback(() => {
     setIsLoading(true)
     getAllVocabularies('vocabularies').then((res) => {
-      const vocabulariesWithCategory = res.data.data.map((item, index) => {
+      const vocabulariesWithCategory = res.data.data.reverse().map((item, index) => {
         const categoryNames = item.categoryIds.map((categoryId) => categoryMap[categoryId])
         return {
           ...item,
