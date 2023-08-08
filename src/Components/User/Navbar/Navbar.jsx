@@ -74,9 +74,7 @@ function Navbar() {
         
         <Col span={6} className='navbar_right'>
           <div className='logo-user'>
-
             <img src={TCN} alt='User Logo' />
-
           </div>
           <div className='username'>
             {username}
