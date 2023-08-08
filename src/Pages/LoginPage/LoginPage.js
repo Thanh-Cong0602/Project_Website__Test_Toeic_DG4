@@ -54,7 +54,7 @@ function LoginPage() {
   }
   useEffect(() => {
     dispatch(userActions.logout());
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <div className='loginPage'>

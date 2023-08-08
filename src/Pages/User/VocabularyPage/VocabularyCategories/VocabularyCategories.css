@@ -1,0 +1,24 @@
+.vocabulary-categories .main-list-view {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.vocabulary-categories .main-list-view .item {
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 1px 2px 3px 2px #999;
+  display: flex;
+  text-align: left;
+  gap: 10px;
+  max-width: 250px;
+  font-size: 15px;
+}
+.vocabulary-categories .main-list-view .item .item-name {
+  color: black;
+}
+.vocabulary-categories .main-list-view .item:hover {
+  box-shadow: 1px 2px 3px 2px rgb(35, 202, 239);
+  color: rgb(255, 148, 140) !important;
+}
+.vocabulary-categories .main-list-view .item:hover .item-name {
+  color: rgb(255, 148, 140) !important;
+}/*# sourceMappingURL=VocabularyCategories.css.map */

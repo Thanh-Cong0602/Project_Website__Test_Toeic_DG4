@@ -1,5 +1,4 @@
 import { userConstants } from '../_constants';
-// import Cookies from 'js-cookie'; 
 const initialState = {
   isLoggedIn: false,
   dataUser: {},

@@ -9,7 +9,7 @@
 .main-footer {
   margin-top: 50px;
   height: 500px;
-  background: #E7ECF9;
+  background: linear-gradient(rgb(44, 225, 193) 0%, rgb(35, 202, 239) 100%) !important;
 }
 .main-footer .main-footer-flex {
   max-width: 1200px;

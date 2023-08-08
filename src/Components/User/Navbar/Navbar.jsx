@@ -11,7 +11,6 @@ import { userActions } from '../../../Redux/_actions'
 function Navbar() {
   const [currentPage, setCurrentPage] = useState('');
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
   const username = useSelector(state => state.authentication.dataUser.username);
   const dispatch = useDispatch()
   const handleLogout = () => {
@@ -27,7 +26,7 @@ function Navbar() {
   }
   return (
     <div className='navbar'>
-      <Row gutter={32}>
+      <Row>
         <Col span={6} className='navbar_left'>
           <div className={`logo ${currentPage === 'homepage' ? 'page-active' : ''}`}>
             <Link to={"/homepage"} onClick={() => handleClickPage('homepage')}>
@@ -52,7 +51,7 @@ function Navbar() {
             <Col span={6}>
               <Link to={"/practice"} onClick={() => handleClickPage('practice')}>
                 <div className={`page-item ${currentPage === 'practice' ? 'btn-active' : ''}`}>
-                  Practice L&W
+                  Practice
                 </div>
               </Link>
             </Col>
@@ -72,9 +71,10 @@ function Navbar() {
             </Col>
           </Row>
         </Col>
+        
         <Col span={6} className='navbar_right'>
           <div className='logo-user'>
-            <img src={TCN} alt='Picture User' />
+            <img src={TCN} alt='User Logo' />
           </div>
           <div className='username'>
             {username}
