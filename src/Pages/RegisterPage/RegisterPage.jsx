@@ -102,14 +102,11 @@ function RegisterPage() {
           </div>
           <div className='input-item'>
             <Input.Password style={{ padding: '10px', fontSize: '15px' }}
-
               placeholder="Enter your password"
               prefix={<KeyOutlined />}
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               name='password'
-              onChange={handleChange}
-            />
-
+              onChange={handleChange} />
           </div>
           <div className='input-item'>
             <Input.Password style={{ padding: '10px', fontSize: '15px' }}
@@ -143,7 +140,7 @@ function RegisterPage() {
                   style={{ color: formErrors.surname ? 'red' : '' }} />}
                 name='surname'
                 onChange={handleChange}
-                
+
               />
               {formErrors.surname && <div className='error-message'>{formErrors.surname}</div>}
             </div>
@@ -156,7 +153,7 @@ function RegisterPage() {
                   style={{ color: formErrors.name ? 'red' : '' }} />}
                 name='name'
                 onChange={handleChange}
-                
+
               />
               {formErrors.name && <div className='error-message'>{formErrors.name}</div>}
             </div>
@@ -168,9 +165,7 @@ function RegisterPage() {
                 suffix={<InfoCircleOutlined
                   style={{ color: formErrors.email ? 'red' : '' }} />}
                 name='email'
-                onChange={handleChange}
-                
-              />
+                onChange={handleChange} />
               {formErrors.email && <div className='error-message'>{formErrors.email}</div>}
             </div>
             <div className='dateofBirth'>
@@ -185,8 +180,7 @@ function RegisterPage() {
                 placeholder="Enter your address"
                 prefix={<GeoAlt />}
                 name='address'
-                onChange={handleChange}
-              />
+                onChange={handleChange} />
             </div>
             <div className='input-item'>
               <PhoneInput
@@ -216,9 +210,7 @@ function RegisterPage() {
                 </Link></p>
             </div>
           </div>
-
         </form>
-
       </div>
     </>
   )
