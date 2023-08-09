@@ -10,10 +10,7 @@ import { userActions } from '../../Redux/_actions';
 import { loginAPI } from '../../Api/Service/auth.service';
 function LoginPage() {
 
-  const [data, setData] = useState({
-    username: '',
-    password: ''
-  })
+  const [data, setData] = useState({ username: '', password: '' })
   const [formErrors, setFormErrors] = useState({});
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -42,7 +39,7 @@ function LoginPage() {
       }
       else {
         loginAPI('accounts/login', data).then((res) => {
-          const dataUser = {username: data.username, role: res.data.data.role}
+          const dataUser = { username: data.username, role: res.data.data.role }
           dispatch(userActions.login(dataUser))
           toast.success(res.data.message, { autoClose: 2000 })
           navigate('/homepage')
