@@ -29,7 +29,6 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID }) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    
     const startTime = Date.now()
     setTimeStart(startTime)
     getQuestionByCategory('questions/getByObjectTypeIds', vocabulariesID).then((res) => {
@@ -159,184 +158,192 @@ function PlayGameVocabulary({ setIsShowPlayGame, vocabulariesID }) {
   return (
     <>
       {isDataLoaded ? (
-        <div className='main-study-vocabulary' id="playGameSection">
-          <div className='main-study-flex'>
-            <div className='study-layout-left'>
-              <div className='title'>
-                <h2>{currentCategory.categoryName}</h2>
-              </div>
-              {!isShowAnswer ? (
-                <>
-                  <div className='showQuestion' data-aos="fade-right" data-aos-delay="400">
-                    <div className='allQuestions'>
-                      {questions.map((item, index) => (
-                        <div className={`btn-question 
-                           ${currentQuestionIndex === index ? 'currentQuestion' : ''}
-                           ${selectedAnswers[index] ? 'selected' : ''}`}
-                          key={item.id}
-                          onClick={() => handleQuestionClick(index)}>
-                          <span className='num-question'>{index + 1}</span>
-                        </div>
-                      ))}
-                    </div>
+        <>
+          {questions.length !== 0 ? (
+            <div className='main-study-vocabulary' id="playGameSection">
+              <div className='main-study-flex'>
+                <div className='study-layout-left'>
+                  <div className='title'>
+                    <h2>{currentCategory.categoryName}</h2>
                   </div>
-                  <div className='countdown__time'>
-                    <ClockCircleTwoTone />
-                    <Countdown date={timeStart + timeDelay + 60000 * 0.5}
-                      onComplete={autoSave}
-                      renderer={renderer}
-                    />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className='showAnswer'>
-                    <div className='answer-items'>
-                      {
-                        questions.map((item, index) => {
-                          return (
-                            <div className={`answer-item
-                                    ${currentQuestionIndex === index ? 'borderAnswer' : ''}
-                                    ${item.optionAnswers.correctAnswer === selectedAnswers[index].userAnswer ? 'answer-item-true' : 'answer-item-false'}`}
-                              key={index}
+                  {!isShowAnswer ? (
+                    <>
+                      <div className='showQuestion' data-aos="fade-right" data-aos-delay="400">
+                        <div className='allQuestions'>
+                          {questions.map((item, index) => (
+                            <div className={`btn-question 
+                          ${currentQuestionIndex === index ? 'currentQuestion' : ''}
+                          ${selectedAnswers[index] ? 'selected' : ''}`}
+                              key={item.id}
                               onClick={() => handleQuestionClick(index)}>
                               <span className='num-question'>{index + 1}</span>
                             </div>
-                          )
-                        })
-                      }
-                    </div>
-                    <div className='result'>
-                      <div className='correct'>
-                        <div className='btn-correct'></div>
-                        <div>
-                          <div className='show-correct'>
-                            {countCorrectAnswer}/{questions.length} Correct
+                          ))}
+                        </div>
+                      </div>
+                      <div className='countdown__time'>
+                        <ClockCircleTwoTone />
+                        <Countdown date={timeStart + timeDelay + 60000 * 0.5}
+                          onComplete={autoSave}
+                          renderer={renderer}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className='showAnswer'>
+                        <div className='answer-items'>
+                          {
+                            questions.map((item, index) => {
+                              return (
+                                <div className={`answer-item
+                                   ${currentQuestionIndex === index ? 'borderAnswer' : ''}
+                                   ${item.optionAnswers.correctAnswer === selectedAnswers[index].userAnswer ? 'answer-item-true' : 'answer-item-false'}`}
+                                  key={index}
+                                  onClick={() => handleQuestionClick(index)}>
+                                  <span className='num-question'>{index + 1}</span>
+                                </div>
+                              )
+                            })
+                          }
+                        </div>
+                        <div className='result'>
+                          <div className='correct'>
+                            <div className='btn-correct'></div>
+                            <div>
+                              <div className='show-correct'>
+                                {countCorrectAnswer}/{questions.length} Correct
+                              </div>
+                            </div>
+                          </div>
+                          <div className='correct'>
+                            <div className='btn-incorrect'></div>
+                            <div className='show-correct'>
+                              {questions.length - countCorrectAnswer}/{questions.length} Incorrect
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className='correct'>
-                        <div className='btn-incorrect'></div>
-                        <div className='show-correct'>
-                          {questions.length - countCorrectAnswer}/{questions.length} Incorrect
+                        <div className='elapsedTime'>
+                          ElapsedTime: {convertTime()}
+                        </div>
+                        <div className='completed-review'
+                          onClick={() => {
+                            setIsShowAnswer(false)
+                            setIsShowPlayGame(false)
+                          }}>
+                          Complete Review
                         </div>
                       </div>
-                    </div>
-                    <div className='elapsedTime'>
-                      ElapsedTime: {convertTime()}
-                    </div>
-                    <div className='completed-review'
-                      onClick={() => {
-                        setIsShowAnswer(false)
-                        setIsShowPlayGame(false)
-                      }}>
-                      Complete Review
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
+                    </>
+                  )}
+                </div>
 
-            <div className='study-layout-right'>
-              <div className='flash-card-overview' data-aos="fade-left" data-aos-delay="400">
-                {isShowAnswer ? (
-                  <></>
-                ) : (
-                  <>
-                    <div className='exitPlayGame' onClick={() => setIsModalOpen(true)}>
-                      <CloseCircleTwoTone />
-                    </div>
-                  </>
-                )}
-                <div className='flash-card-questions'>
-                  <div className='show-Question'>
-                    {
-                      currentQuestion &&
-                      <div>
-                        <div className='question'>
-                          Question {currentQuestionIndex + 1} : {currentQuestion.textQuestion}
+                <div className='study-layout-right'>
+                  <div className='flash-card-overview' data-aos="fade-left" data-aos-delay="400">
+                    {isShowAnswer ? (
+                      <></>
+                    ) : (
+                      <>
+                        <div className='exitPlayGame' onClick={() => setIsModalOpen(true)}>
+                          <CloseCircleTwoTone />
                         </div>
-                        <div className='answer'>
-                          <input type='radio' id="answerA" name="answer"
-                            value={currentQuestion.optionAnswers.answerA}
-                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerA}
-                            onChange={handleAnswerChange}
-                            className='custom-radio'
-                          />
-                          <label htmlFor='answerA'>
-                            A. {currentQuestion.optionAnswers.answerA}
-                          </label>
-                        </div>
-                        <div className='answer'>
-                          <input type='radio' id="answerB" name="answer"
-                            value={currentQuestion.optionAnswers.answerB}
-                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerB}
-                            onChange={handleAnswerChange}
-                            className='custom-radio'
-                          />
-                          <label htmlFor='answerB'>
-                            B. {currentQuestion.optionAnswers.answerB}
-                          </label>
-                        </div>
-                        <div className='answer'>
-                          <input type='radio' id="answerC" name="answer"
-                            value={currentQuestion.optionAnswers.answerC}
-                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerC}
-                            onChange={handleAnswerChange}
-                            className='custom-radio'
-                          />
-                          <label htmlFor='answerC'>
-                            C. {currentQuestion.optionAnswers.answerC}
-                          </label>
-                        </div>
-                        <div className='answer'>
-                          <input type='radio' id="answerD" name="answer"
-                            value={currentQuestion.optionAnswers.answerD}
-                            checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerD}
-                            onChange={handleAnswerChange}
-                            className='custom-radio'
-                          />
-                          <label htmlFor='answerD'>
-                            D. {currentQuestion.optionAnswers.answerD}
-                          </label>
-                        </div>
-                        {(countCorrectAnswer > 0) ? (
-                          <>
-                            <div className='correctAnswer'>
-                              Correct answer is <span>{questions[currentQuestionIndex].optionAnswers.correctAnswer}</span>
+                      </>
+                    )}
+                    <div className='flash-card-questions'>
+                      <div className='show-Question'>
+                        {
+                          currentQuestion &&
+                          <div>
+                            <div className='question'>
+                              Question {currentQuestionIndex + 1} : {currentQuestion.textQuestion}
                             </div>
-                          </>
+                            <div className='answer'>
+                              <input type='radio' id="answerA" name="answer"
+                                value={currentQuestion.optionAnswers.answerA}
+                                checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerA}
+                                onChange={handleAnswerChange}
+                                className='custom-radio'
+                              />
+                              <label htmlFor='answerA'>
+                                A. {currentQuestion.optionAnswers.answerA}
+                              </label>
+                            </div>
+                            <div className='answer'>
+                              <input type='radio' id="answerB" name="answer"
+                                value={currentQuestion.optionAnswers.answerB}
+                                checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerB}
+                                onChange={handleAnswerChange}
+                                className='custom-radio'
+                              />
+                              <label htmlFor='answerB'>
+                                B. {currentQuestion.optionAnswers.answerB}
+                              </label>
+                            </div>
+                            <div className='answer'>
+                              <input type='radio' id="answerC" name="answer"
+                                value={currentQuestion.optionAnswers.answerC}
+                                checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerC}
+                                onChange={handleAnswerChange}
+                                className='custom-radio'
+                              />
+                              <label htmlFor='answerC'>
+                                C. {currentQuestion.optionAnswers.answerC}
+                              </label>
+                            </div>
+                            <div className='answer'>
+                              <input type='radio' id="answerD" name="answer"
+                                value={currentQuestion.optionAnswers.answerD}
+                                checked={selectedAnswers[currentQuestionIndex]?.userAnswer === currentQuestion.optionAnswers.answerD}
+                                onChange={handleAnswerChange}
+                                className='custom-radio'
+                              />
+                              <label htmlFor='answerD'>
+                                D. {currentQuestion.optionAnswers.answerD}
+                              </label>
+                            </div>
+                            {(countCorrectAnswer > 0) ? (
+                              <>
+                                <div className='correctAnswer'>
+                                  Correct answer is <span>{questions[currentQuestionIndex].optionAnswers.correctAnswer}</span>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                              </>
+                            )}
+                          </div>
+                        }
+                      </div>
+                      <div className='image-vocabulary'>
+                        <img src={ImageVocabulary} alt='Vocabulary' />
+                      </div>
+                    </div>
+                    {isShowAnswer ? (
+                      <>
+                      </>
+                    ) : (
+                      <div className='btn-review'>
+                        <button
+                          className={`btn-prev ${currentQuestionIndex === 0 ? 'disable' : ''}`}
+                          onClick={handlePrevQuestion}
+                          disabled={currentQuestionIndex === 0}>Prev</button>
+                        {isLastQuestion ? (
+                          <button className='btn-submit' onClick={handleSubmitAnswer}>Submit</button>
                         ) : (
-                          <>
-                          </>
+                          <button className='btn-next' onClick={handleNextQuestion}>Next</button>
                         )}
                       </div>
-                    }
-                  </div>
-                  <div className='image-vocabulary'>
-                    <img src={ImageVocabulary} alt='Vocabulary' />
-                  </div>
-                </div>
-                {isShowAnswer ? (
-                  <>
-                  </>
-                ) : (
-                  <div className='btn-review'>
-                    <button
-                      className={`btn-prev ${currentQuestionIndex === 0 ? 'disable' : ''}`}
-                      onClick={handlePrevQuestion}
-                      disabled={currentQuestionIndex === 0}>Prev</button>
-                    {isLastQuestion ? (
-                      <button className='btn-submit' onClick={handleSubmitAnswer}>Submit</button>
-                    ) : (
-                      <button className='btn-next' onClick={handleNextQuestion}>Next</button>
                     )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          ) : (
+            <div>
+              No Question for Vocabulary
+            </div>
+          )}
+        </>
       ) : (
         <div className="loading__container">
           <div className="loader"></div>

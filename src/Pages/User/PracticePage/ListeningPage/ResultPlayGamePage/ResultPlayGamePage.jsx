@@ -375,7 +375,7 @@ function ResultPlayGamePage() {
           </div>
         </>) :
         (
-          <PlayGameListeningPage setIsShowPlayGameListening={setIsShowPlayGameListening}  />
+          <PlayGameListeningPage setIsShowPlayGameListening={setIsShowPlayGameListening} />
         )}
     </>
   )
