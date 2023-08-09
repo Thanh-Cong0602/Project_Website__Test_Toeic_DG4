@@ -11,7 +11,7 @@ function ManageAccount() {
   useEffect(() => {
     setIsLoading(true)
     getAllAccounts('accounts').then((res) => {
-      const addSttToAccounts = res.data.data.map((item, index) => ({
+      const addSttToAccounts = res.data.data.reverse().map((item, index) => ({
         ...item,
         num: index + 1,
       }

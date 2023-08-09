@@ -231,7 +231,7 @@ function QuestionVocabulary() {
       toast.error(err.response.data.message, { autoClose: 2000 })
     })
   };
-  
+
   const onClickOpenModal = useCallback((record) => {
     const requestBody = {
       id: record.id,
